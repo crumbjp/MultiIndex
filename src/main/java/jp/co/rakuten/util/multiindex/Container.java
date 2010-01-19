@@ -5,7 +5,7 @@ import jp.co.rakuten.util.Pair;
 public class Container <T> {
 	private static Integer currentUniqueId = 0;
 	final Pair<Integer,T> pair;
-	public Container(T t) {
+	public Container(final T t) {
 		this.pair = new Pair<Integer, T>(++currentUniqueId, t);
 	}
 	public T get(){

@@ -23,7 +23,7 @@ class MultiSetData implements Comparable<MultiSetData>{
 	}
 }
 public class MultiSetTest extends TestCase {
-	MultiSet<MultiSetData> ms = new MultiSet<MultiSetData>();
+	MultiSet<MultiSetData> ms = new MultiTreeSet<MultiSetData>();
 	ArrayList<Integer> uniqueOrder = new ArrayList<Integer>();
 	@Override
 	protected void tearDown() throws Exception {
@@ -187,6 +187,17 @@ public class MultiSetTest extends TestCase {
 		assertEquals(new Integer(3), ms.lower(new MultiSetData(3)).unique);
 		assertNull(ms.lower(new MultiSetData(1)));
 	}
+	public void testRemove() {
+		Iterator<MultiSetData> it = ms.iterator();
+		it.next();
+		ms.remove(it);
+		uniqueOrder.remove(0);
+		Iterator<Integer> exp = uniqueOrder.iterator();
+		for ( MultiSetData d : ms ) {
+			assertEquals(exp.next(), d.unique);
+		}
+		assertFalse(exp.hasNext());
+	}
 	public void testRemove1() {
 		Iterator<MultiSetData> it = ms.iterator();
 		it.next();
@@ -308,7 +319,7 @@ public class MultiSetTest extends TestCase {
 		Iterator<Integer> exp = uniqueOrder.iterator();
 		for ( MultiSetData d : new Iterable<MultiSetData>() {
 			public Iterator<MultiSetData> iterator() {
-				return ms.equalRange(new MultiSetData(2),new MultiSetData(4));
+				return ms.equalRange(new MultiSetData(2),true,new MultiSetData(4),true);
 			}
 		}) {
 				assertEquals(exp.next(), d.unique);

@@ -9,31 +9,39 @@ import jp.co.rakuten.util.UnmodifiableMapWrapper;
 
 public abstract class UniqueIndex<K,T> extends UnmodifiableMapWrapper<K,Container<T>> implements Index<T> , Map<K,Container<T>>{
 	private Field field;
-	protected abstract Map<K,Container<T>> createContainer(List<Container<T>> origin,Integer size); 
-	public UniqueIndex(Field field) {
+	protected abstract Map<K,Container<T>> createContainer(final List<Container<T>> origin,final Integer size); 
+	public UniqueIndex(final Field field) {
 		this.field = field;
 	}
-	public void opInit   (List<Container<T>> origin,Integer size){
+	@Override
+	public void opInit   (final List<Container<T>> origin,final Integer size){
 		this.container = createContainer(origin,size);
 	}
+	@Override
+	public void opClear () {
+		this.container.clear();
+	}
 	@SuppressWarnings("unchecked")
-	private K getKey(T t) {
+	private K getKey(final T t) {
 		try {
 			return (K)this.field.get(t);
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	public void opAdd(Container<T> c) {
+	@Override
+	public void opAdd(final Container<T> c) {
 		K key = this.getKey(c.pair.second);
 		if ( this.container.put(key, c) != null )
 			throw new RuntimeException("ADD : Unique-index is specified conflicting key !");
 	}
-	public void opRemove(Container<T> c){
+	@Override
+	public void opRemove(final Container<T> c){
 		K key = this.getKey(c.pair.second);
 		this.container.remove(key);
 	}
-	public void opModify(Container<T> c, T t){
+	@Override
+	public void opModify(final Container<T> c, final T t){
 		K oldKey = this.getKey(c.pair.second);
 		K newKey = this.getKey(t);
 		if (! oldKey.equals(newKey) ) {
@@ -42,11 +50,13 @@ public abstract class UniqueIndex<K,T> extends UnmodifiableMapWrapper<K,Containe
 				throw new RuntimeException("MODIFY : Unique-index is specified conflicting key !");
 		}
 	}
-	public boolean opExist(T t) {
+	@Override
+	public boolean opCheckAdd(final T t) {
 		K key = this.getKey(t);
-		return this.container.containsKey(key);
+		return !this.container.containsKey(key);
 	}
-	public boolean opCheckModify(Container<T> c, T t) {
+	@Override
+	public boolean opCheckModify(final Container<T> c, final T t) {
 		K oldKey = this.getKey(c.pair.second);
 		K newKey = this.getKey(t);
 		if (! oldKey.equals(newKey) ) {

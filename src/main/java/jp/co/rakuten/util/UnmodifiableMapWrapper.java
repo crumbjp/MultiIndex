@@ -11,11 +11,11 @@ public abstract class UnmodifiableMapWrapper<K,V> implements Map<K, V> {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean containsKey(Object key) {
+	public boolean containsKey(final Object key) {
 		return this.container.containsKey(key);
 	}
 	@Override
-	public boolean containsValue(Object value) {
+	public boolean containsValue(final Object value) {
 		return this.container.containsValue(value);
 	}
 	@Override
@@ -23,7 +23,7 @@ public abstract class UnmodifiableMapWrapper<K,V> implements Map<K, V> {
 		return this.container.entrySet();
 	}
 	@Override
-	public V get(Object key) {
+	public V get(final Object key) {
 		return this.container.get(key);
 	}
 	@Override
@@ -35,15 +35,15 @@ public abstract class UnmodifiableMapWrapper<K,V> implements Map<K, V> {
 		return this.container.keySet();
 	}
 	@Override
-	public V put(K key, V value) {
+	public V put(final K key, final V value) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
+	public void putAll(final Map<? extends K, ? extends V> m) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public V remove(Object key) {
+	public V remove(final Object key) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override

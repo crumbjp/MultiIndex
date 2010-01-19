@@ -10,19 +10,24 @@ public class IdentityIndex<T>  extends UnmodifiableMapWrapper<T,Container<T>> im
 	public IdentityIndex() {
 	}
 	@Override
-	public void opInit(List<Container<T>> origin, Integer size) {
+	public void opInit(final List<Container<T>> origin, final Integer size) {
 		this.container = new TreeMap<T,Container<T>>();
 	}
-	public void opAdd(Container<T> c) {
+	@Override
+	public void opClear(){
+		this.container.clear();
+	}
+	@Override
+	public void opAdd(final Container<T> c) {
 		if ( this.container.put(c.pair.second,c) != null )
 			throw new RuntimeException("ADD : Identity is specified conflicting key !");
 	}
 	@Override
-	public void opRemove(Container<T> c) {
+	public void opRemove(final Container<T> c) {
 		this.container.remove(c.pair.second);
 	}
 	@Override
-	public void opModify(Container<T> c, T t) {
+	public void opModify(final Container<T> c, final T t) {
 		T oldKey = c.pair.second;
 		T newKey = t;
 		if (! oldKey.equals(newKey) ) {
@@ -32,11 +37,11 @@ public class IdentityIndex<T>  extends UnmodifiableMapWrapper<T,Container<T>> im
 		}
 	}
 	@Override
-	public boolean opExist(T t) {
-		return this.container.containsKey(t);
+	public boolean opCheckAdd(final T t) {
+		return !this.container.containsKey(t);
 	}
 	@Override
-	public boolean opCheckModify(Container<T> c, T t) {
+	public boolean opCheckModify(final Container<T> c, final T t) {
 		T oldKey = c.pair.second;
 		T newKey = t;
 		if (! oldKey.equals(newKey) ) {

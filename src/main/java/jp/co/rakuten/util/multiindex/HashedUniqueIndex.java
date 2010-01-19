@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class HashedUniqueIndex<K,T> extends UniqueIndex<K,T>{
-	public HashedUniqueIndex(Field field) {
+	public HashedUniqueIndex(final Field field) {
 		super(field);
 	}
 	@Override
-	protected Map<K, Container<T>> createContainer(List<Container<T>> origin,Integer size) {
+	protected Map<K, Container<T>> createContainer(final List<Container<T>> origin,final Integer size) {
 		return new HashMap<K,Container<T>>();
 	}
 }

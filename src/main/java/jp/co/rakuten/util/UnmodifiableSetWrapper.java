@@ -7,11 +7,11 @@ import java.util.Set;
 public abstract class UnmodifiableSetWrapper<T> implements Set<T>{
 	protected Set<T> container;
 	@Override
-	public boolean add(T e) {
+	public boolean add(final T e) {
 		return this.container.add(e);
 	}
 	@Override
-	public boolean addAll(Collection<? extends T> c) {
+	public boolean addAll(final Collection<? extends T> c) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
@@ -19,11 +19,11 @@ public abstract class UnmodifiableSetWrapper<T> implements Set<T>{
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean contains(Object o) {
+	public boolean contains(final Object o) {
 		return this.container.contains(o);
 	}
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(final Collection<?> c) {
 		return this.container.containsAll(c);
 	}
 	@Override
@@ -32,18 +32,18 @@ public abstract class UnmodifiableSetWrapper<T> implements Set<T>{
 	}
 	@Override
 	public Iterator<T> iterator() {
-		return this.container.iterator();
+		return new ConstIterator<T>(this.container.iterator());
 	}
 	@Override
-	public boolean remove(Object o) {
+	public boolean remove(final Object o) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(final Collection<?> c) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(final Collection<?> c) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
@@ -55,7 +55,7 @@ public abstract class UnmodifiableSetWrapper<T> implements Set<T>{
 		return this.container.toArray();
 	}
 	@Override
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(final T[] a) {
 		return this.container.toArray(a);
 	};
 }

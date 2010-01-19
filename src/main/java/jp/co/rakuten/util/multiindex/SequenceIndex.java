@@ -8,22 +8,32 @@ public class SequenceIndex<T> extends UnmodifiableListWrapper<Container<T>> impl
 	public SequenceIndex() {
 		// Nothing to do.
 	}
-	public void opInit   (List<Container<T>> origin,Integer size){
+	@Override
+	public void opInit   (final List<Container<T>> origin,final Integer size){
 		this.container = origin;
 	}
-	public void opAdd(Container<T> c) {
+	@Override
+	public void opClear() {
 		;
 	}
-	public void opRemove(Container<T> c){
+	@Override
+	public void opAdd(final Container<T> c) {
 		;
 	}
-	public void opModify(Container<T> c, T t) {
+	@Override
+	public void opRemove(final Container<T> c){
 		;
 	}
-	public boolean opExist(T t) {
-		return false;
+	@Override
+	public void opModify(final Container<T> c, T t) {
+		;
 	}
-	public boolean opCheckModify(Container<T> c, T t) {
+	@Override
+	public boolean opCheckAdd(final T t) {
+		return true;
+	}
+	@Override
+	public boolean opCheckModify(final Container<T> c, T t) {
 		return true;
 	}
 }

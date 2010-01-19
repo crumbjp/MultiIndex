@@ -1,14 +1,15 @@
 package jp.co.rakuten.util;
 
 public class ComparablePair<K extends Comparable<K>,V> extends Pair<K,V> implements Comparable<ComparablePair<K,V>>{
-	public ComparablePair(K k,V v) {
+	public ComparablePair(final K k,final V v) {
 		super(k,v);
 	}
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return this.first.equals(((ComparablePair<K,V>)o).first);
 	}
-	public int compareTo(ComparablePair<K, V> o) {
+	@Override
+	public int compareTo(final ComparablePair<K, V> o) {
 		return this.first.compareTo(((ComparablePair<K,V>)o).first);
 	};
 }

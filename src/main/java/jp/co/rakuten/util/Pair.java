@@ -9,7 +9,7 @@ package jp.co.rakuten.util;
 public class Pair<FIRST,SECOND> {
 	public FIRST first;
 	public SECOND second;
-	public Pair( FIRST first , SECOND second) {
+	public Pair( final FIRST first , final SECOND second) {
 		this.first = first;
 		this.second = second;
 	}
