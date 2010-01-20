@@ -1,6 +1,7 @@
 package jp.co.rakuten.util;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,5 +55,4 @@ public abstract class UnmodifiableMapWrapper<K,V> implements Map<K, V> {
 	public Collection<V> values() {
 		return this.container.values();
 	}
-
 }

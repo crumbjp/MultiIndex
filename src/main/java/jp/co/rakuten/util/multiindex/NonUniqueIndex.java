@@ -63,11 +63,6 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 	}
 	@Override
 	public boolean opCheckModify(final Container<T> c, final T t) {
-		K oldKey = this.getKey(c.pair.second);
-		K newKey = this.getKey(t);
-		if (! oldKey.equals(newKey) ) {
-			return ! this.contains(newKey);
-		}
 		return true;
 	}
 }

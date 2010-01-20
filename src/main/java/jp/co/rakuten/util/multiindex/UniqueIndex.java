@@ -1,17 +1,33 @@
 package jp.co.rakuten.util.multiindex;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 
 import jp.co.rakuten.util.UnmodifiableMapWrapper;
 
 
-public abstract class UniqueIndex<K,T> extends UnmodifiableMapWrapper<K,Container<T>> implements Index<T> , Map<K,Container<T>>{
+public abstract class UniqueIndex<K,T> extends UnmodifiableMapWrapper<K,Container<T>> implements Index<T> , Map<K,Container<T>> , Iterable<Container<T>>{
 	private Field field;
 	protected abstract Map<K,Container<T>> createContainer(final List<Container<T>> origin,final Integer size); 
 	public UniqueIndex(final Field field) {
 		this.field = field;
+	}
+	@Override
+	public Iterator<Container<T>> iterator() {
+		return new Iterator<Container<T>>() {
+			Iterator<Map.Entry<K, Container<T>>> it = container.entrySet().iterator();
+			public boolean hasNext() {
+				return it.hasNext();
+			};
+			public Container<T> next() {
+				return it.next().getValue();
+			};
+			public void remove() {
+				it.remove();
+			};
+		};
 	}
 	@Override
 	public void opInit   (final List<Container<T>> origin,final Integer size){

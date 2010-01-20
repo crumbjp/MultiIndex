@@ -1,7 +1,7 @@
 package jp.co.rakuten.util.multiindex;
 import java.util.List;
 
-public interface Index <T>{
+public interface Index <T> {
 	public void opInit   (final List<Container<T>> origin,final Integer size);
 	public void opAdd    (final Container<T> c);
 	public void opRemove (final Container<T> c);

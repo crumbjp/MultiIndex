@@ -1,65 +1,39 @@
 package jp.co.rakuten.util;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
 
-public abstract class IterableMap<K extends Comparable<K>,V> implements Map<K,V> , Iterable<Pair<K,V>>{
-	protected Set<ComparablePair<K,V>> container;
+import jp.co.rakuten.util.tree.Pair;
 
-	@Override
-	public Iterator<ComparablePair<K, V>> iterator() {
-		return container.iterator();
-	}
-	@Override
-	public void clear() {
-		this.container.clear();
-	}
-	@Override
-	public boolean containsKey(Object key) {
-		return this.container.contains(key);
-	}
-	@Override
-	public boolean containsValue(Object value) {
-		return this.container.containsValue(value);
-	}
-	@Override
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		return this.container.entrySet();
-	}
-	@Override
-	public V get(Object key) {
-		return this.container.get(key);
-	}
-	@Override
-	public boolean isEmpty() {
-		return this.container.isEmpty();
-	}
-	@Override
-	public Set<K> keySet() {
-		return this.container.keySet();
-	}
-	@Override
-	public V put(K key, V value) {
-		return this.container.put(key, value);
-	}
-	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
-		this.container.putAll(m);
-	}
-	@Override
-	public V remove(Object key) {
-		return this.container.remove(key);
-	}
-	@Override
-	public int size() {
-		return this.container.size();
-	}
-	@Override
-	public Collection<V> values() {
-		return this.container.values();
-	}
+
+public interface IterableMap<K,V> extends Iterable<Pair<K, V>>{
+//	public Iterator<Pair<K, V>> descendingIterator();
+	public Iterator<Pair<K, V>> iterator();
+	public boolean put(final K k,final V v);
+	public boolean contains(final Object e);
+//	public void putAll(final Collection<? extends Pair<K,V>> c);
+	public void clear();
+	public int size();
+	public boolean isEmpty();
+	public void remove(final K e);
+	public V get( final K e );
+/*	
+	public void put(final K k,final V v);
+	public void putAll(final Collection<? extends ComparablePair<K,V>> c);
+	public boolean containsAll(final Collection<? extends ComparablePair<K,V>> c);
+	public void remove(final Iterator<ComparablePair<K, V>> it);
+	public V first();
+	public V last();
+	public V ceiling(final K e);
+	public V floor(final K e);
+	public V higher(final K e);
+	public V lower(final K e);
+	public V pollFirst();
+	public V pollLast();
+	public V get( final K e );
+	public Iterator<ComparablePair<K, V>> getRange( final K e1 , final boolean inclusive1 , final K e2 , final boolean inclusive2);
+	*/
+	
 }

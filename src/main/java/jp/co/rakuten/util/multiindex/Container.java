@@ -1,6 +1,6 @@
 package jp.co.rakuten.util.multiindex;
 
-import jp.co.rakuten.util.Pair;
+import jp.co.rakuten.util.tree.Pair;
 
 public class Container <T> {
 	private static Integer currentUniqueId = 0;

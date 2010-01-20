@@ -14,14 +14,6 @@ public interface MultiSet<T> extends Iterable<T> {
 	public boolean isEmpty();
 	public void remove(final Iterator<T> it);
 	public boolean removeAll(final T e);
-	public T first();
-	public T last();
-	public T ceiling(final T e);
-	public T floor(final T e);
-	public T higher(final T e);
-	public T lower(final T e);
-	public T pollFirst();
-	public T pollLast();
 	public Iterator<T> equalRange( final T e );
 	public Iterator<T> equalRange( final T e1 , final boolean inclusive1, final T e2 , final boolean inclusive2);
 }

@@ -2,13 +2,29 @@ package jp.co.rakuten.util.multiindex;
 
 import jp.co.rakuten.util.UnmodifiableMapWrapper;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class IdentityIndex<T>  extends UnmodifiableMapWrapper<T,Container<T>> implements Index<T> , Map<T,Container<T>>{
+public class IdentityIndex<T>  extends UnmodifiableMapWrapper<T,Container<T>> implements Index<T> , Map<T,Container<T>> , Iterable<Container<T>> {
 	public IdentityIndex() {
 	}
+	@Override
+	public Iterator<Container<T>> iterator() {
+		return new Iterator<Container<T>>() {
+			Iterator<Map.Entry<T, Container<T>>> it = container.entrySet().iterator();
+			public boolean hasNext() {
+				return it.hasNext();
+			};
+			public Container<T> next() {
+				return it.next().getValue();
+			};
+			public void remove() {
+				it.remove();
+			};
+		};
+	};
 	@Override
 	public void opInit(final List<Container<T>> origin, final Integer size) {
 		this.container = new TreeMap<T,Container<T>>();

@@ -257,41 +257,35 @@ public class MultiTreeSet<T extends Comparable<T> > implements MultiSet<T> {
 		}
 		return false;
 	}
-	@Override
 	public T first() {
 		List<T> d = this.container.first(); 
 		return (d == null)?null:d.get(0);
 	}
-	@Override
+
 	public T last() {
 		List<T> d = this.container.last(); 
 		return (d == null)?null:d.get(d.size()-1);
 	}
-	@Override
 	public T ceiling(final T e) {
 		TempList<T> t = new TempList<T>((T)e);
 		List<T> d = this.container.ceiling(t);
 		return (d == null)?null:d.get(0);
 	};
-	@Override
 	public T floor(final T e) {
 		TempList<T> t = new TempList<T>((T)e);
 		List<T> d = this.container.floor(t); 
 		return (d == null)?null:d.get(d.size()-1);
 	};
-	@Override
 	public T higher(final T e) {
 		TempList<T> t = new TempList<T>((T)e);
 		List<T> d = this.container.higher(t);
 		return (d == null)?null:d.get(0);
 	};
-	@Override
 	public T lower(final T e) {
 		TempList<T> t = new TempList<T>((T)e);
 		List<T> d = this.container.lower(t);
 		return (d == null)?null:d.get(d.size()-1);
 	};
-	@Override
 	public T pollFirst() {
 		List<T> d = this.container.first();
 		if (d.size() == 1 ){
@@ -300,7 +294,6 @@ public class MultiTreeSet<T extends Comparable<T> > implements MultiSet<T> {
 			return d.remove(0);
 		}
 	}
-	@Override
 	public T pollLast() {
 		List<T> d = this.container.last();
 		if (d.size() == 1 ){
@@ -309,13 +302,11 @@ public class MultiTreeSet<T extends Comparable<T> > implements MultiSet<T> {
 			return d.remove(d.size()-1);
 		}
 	};
-	@Override
 	public Iterator<T> equalRange( final T e ) {
 		// Todo: @@@ more effective !!!
 		TempList<T> t = new TempList<T>((T)e);
 		return new MultiSetIterator<T>(this,this.container.subSet(t,true, t,true).iterator(),MultiSetIterator.Order.ASC);
 	}
-	@Override
 	public Iterator<T> equalRange( final T e1 , final boolean inclusive1, final T e2 , final boolean inclusive2) {
 		TempList<T> t1 = new TempList<T>((T)e1);
 		TempList<T> t2 = new TempList<T>((T)e2);

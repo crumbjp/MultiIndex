@@ -1,5 +1,7 @@
 package jp.co.rakuten.util;
 
+import jp.co.rakuten.util.tree.Pair;
+
 public class ComparablePair<K extends Comparable<K>,V> extends Pair<K,V> implements Comparable<ComparablePair<K,V>>{
 	public ComparablePair(final K k,final V v) {
 		super(k,v);

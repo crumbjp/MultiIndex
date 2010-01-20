@@ -23,7 +23,7 @@ class MultiSetData implements Comparable<MultiSetData>{
 	}
 }
 public class MultiSetTest extends TestCase {
-	MultiSet<MultiSetData> ms = new MultiTreeSet<MultiSetData>();
+	MultiTreeSet<MultiSetData> ms = new MultiTreeSet<MultiSetData>();
 	ArrayList<Integer> uniqueOrder = new ArrayList<Integer>();
 	@Override
 	protected void tearDown() throws Exception {
