@@ -3,7 +3,7 @@ package jp.co.rakuten.util.tree;
 import java.util.Comparator;
 
 
-// -agentlib:hprof=cpu=samples,heap=sites
+// -agentlib:hprof=cpu=times,heap=sites
 public class AvlNode<T> {
 	short			nleft  = 0;
 	short			nright = 0;
