@@ -5,251 +5,243 @@ import java.util.Comparator;
 
 // -agentlib:hprof=cpu=samples,heap=sites
 public class AvlNode<T> {
-	final T		t;
+	short			nleft  = 0;
+	short			nright = 0;
 	AvlNode<T>		parent = null;
 	AvlNode<T>		left   = null;
-	int				nleft  = 0;
 	AvlNode<T>		right  = null;
-	int				nright = 0;
-	final Comparator<T> comparator;
-	AvlNode(Comparator<T> comparator){
-		this.t = null;
-		this.comparator = comparator;
-	}
+	private final Comparator<T> comparator;
+	final T		t;
+
 	AvlNode(Comparator<T> comparator,T t){
 		this.t = t;
 		this.comparator = comparator;
 	}
-	int deep() {
+	private int deep() {
 		return (nleft < nright)?nright:nleft;
 	}
-	AvlNode<T> shiftL(){
-		AvlNode<T> ret = left;
+
+/*
+             -D
+         -LL
+             -C 
+   -pivot
+         -B
+-this
+    -A
+       
+
+       -D
+   -LL
+       -C 
+-pivot
+       -B(*1)
+  -this(*2)
+       -A
+*/        
+
+	private AvlNode<T> shiftLL(){
+		AvlNode<T> pivot = left;
+		AvlNode<T> B = pivot.right;
+		
 		// switch parent 
-		ret.parent = parent;
-		parent     = ret;
-		// child switch
-		left = ret.right;
-		if( left != null) {
-			left.parent = this;
+		pivot.parent = parent;
+		// (*1)
+		left = B;
+		if( B!= null) {
+			B.parent = this;
 		}
-		ret.right = this;
-		// calc n
-		nleft = ret.nright;
-		ret.nright = 1 + deep();
-		// @@@
-		ret.right = this.equilibrium();
-		return ret;
+		nleft = pivot.nright;
+		// (*2)
+		pivot.right = this;
+		parent       = pivot;
+		pivot.nright = (short) (1 + deep());
+		return pivot;
 	}
-	AvlNode<T> shiftR(){
-		AvlNode<T> ret = right;
+	
+/*
+    -A
+-this
+        -B
+    -pivot
+            -C 
+        -RR
+            -D
+
+
+        -A
+    -this(*2)
+        -B(*1)
+-pivot
+        -C 
+    -RR
+        -D
+*/
+	
+	private AvlNode<T> shiftRR(){
+		AvlNode<T> pivot = right;
+		AvlNode<T> B = pivot.left;
+		
 		// switch parent 
-		ret.parent = parent;
-		parent     = ret;
-		// child switch
-		right = ret.left;
-		if( right != null) {
-			right.parent = this;
+		pivot.parent = parent;
+		// (*1)
+		right = B;
+		if( B!= null) {
+			B.parent = this;
 		}
-		ret.left = this;
-		// calc n
-		nright = ret.nleft;
-		ret.nleft = 1 + deep();
-		// @@@
-		ret.left= this.equilibrium();
-		return ret;
+		nright= pivot.nleft;
+		// (*2)
+		pivot.left = this;
+		parent       = pivot;
+		pivot.nleft= (short) (1 + deep());
+		return pivot;
+	}
+
+
+/*
+
+        -B
+    -L
+            -C 
+        -pivot
+            -D
+-this
+    -A
+
+
+
+        -B
+    -L(*2) 
+        -C(*1)
+-pivot
+        -D(*3)
+    -this(*4)
+        -A
+*/        
+	private AvlNode<T> shiftLR(){
+		AvlNode<T> pivot = left.right;
+		AvlNode<T> L = left;
+		AvlNode<T> C = pivot.left;
+		AvlNode<T> D = pivot.right;
+		
+		// switch parent 
+		pivot.parent = parent;
+		parent       = pivot;
+		// (*1)
+		L.right = C;
+		if( C!= null) {
+			C.parent = L;
+		}
+		L.nright = pivot.nleft;
+		// (*2)
+		pivot.left = L;
+		L.parent = pivot;
+		pivot.nleft = (short) (L.nright +1); // (1+L.deep())
+		// (*3)
+		left = D;
+		if ( D!=null) {
+			D.parent = this;
+		}
+		nleft = pivot.nright;
+		// (*4)
+		pivot.right= this;
+		parent = pivot;
+		pivot.nright= (short) (1+deep());
+		
+		return pivot;
 	}
 /*
---befor---
 
-
-                    1 - A(2) 
-           3 - A(4) 
-
-                              1 - A(6) 
-                    2 - A(11) 
-                              1 - I(14) 
- 1 - K(13) 
---after---
-
-
-          1 - A(2) 
- 1 - A(4) 
-
-                              1 - A(6) 
-                    2 - A(11) 
-                              1 - I(14) 
-          3 - K(13) 
-
-
---- shold ---
-
-
-http://upload.wikimedia.org/wikipedia/commons/c/c4/Tree_Rebalancing.gif
-                    1 - A(2) 
-           3 - A(4) 
-
-        1 - A(6) 
-2 - A(11) 
-                1 - I(14) 
-        1 - K(13) 
-
-
-
-
-             - A(2)
-      - A(4)
-A(6)
-             - A(11)
-      - I(14)
-           - K(13)
-
-
-
-
-             - A(2)
-      - A(4)
-             - A(6)
-A(11)
-      - I(14)
-           - K(13)
-
-
-
-
-
-
---befor---
-
-
-                    1 - A(2) 
-           3 - A(4) 
-
-                              1 - A(6) 
-                    2 - A(11) 
-                              1 - I(14) 
- 1 - K(13) 
---after---
-
-
-          1 - A(2) 
- 1 - A(4) 
-
-                    1 - A(6) 
-          3 - A(11) 
-
-                              1 - I(14) 
-                    2 - K(13) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   1 - A(2) 
-          3 - A(4) 
-
-                             1 - A(6) 
-                   2 - A(11) 
-                             1 - I(14) 
- 0 - K(3) 
-
-                                      1 - K(13) 
-                             2 - M(5) 
-                                      1 - M(16) 
-                   3 - N(10) 
-
-                                      1 - O(12) 
-                             2 - S(8) 
-          4 - T(7) 
-
-                            1 - U(9) 
-                   2 - W(1) 
-                            1 - Y(15) 
--------------------------------------------
-
-
-          1 - A(2) 
- 0 - A(4) 
-
-                                                          1 - A(6) 
-                                                2 - A(11) 
-                                                          1 - I(14) 
-                                      3 - K(13) 
-                             4 - M(5) 
-                                      1 - M(16) 
-                   5 - N(10) 
-
-                                      1 - O(12) 
-                             2 - S(8) 
-          6 - T(7) 
-
-                            1 - U(9) 
-                   2 - W(1) 
-                            1 - Y(15) 
+    -A
+-this
+            -D
+        -pivot
+            -C 
+    -R
+        -B
+
+
+        -A
+    -this(*4)
+        -D(*3)
+-pivot
+        -C(*1)
+    -R(*2) 
+        -B
+*/        
+	private AvlNode<T> shiftRL(){
+		AvlNode<T> pivot = right.left;
+		AvlNode<T> R = right;
+		AvlNode<T> C = pivot.right;
+		AvlNode<T> D = pivot.left;
+		
+		// switch parent 
+		pivot.parent = parent;
+		parent       = pivot;
+		// (*1)
+		R.left = C;
+		if( C!= null) {
+			C.parent = R;
+		}
+		R.nleft  = pivot.nright;
+		// (*2)
+		pivot.right = R;
+		R.parent = pivot;
+		pivot.nright= (short) (R.nleft + 1); // (1+L.deep())
+		// (*3)
+		right = D;
+		if ( D!=null) {
+			D.parent = this;
+		}
+		nright = pivot.nleft;
+		// (*4)
+		pivot.left= this;
+		parent = pivot;
+		pivot.nleft= (short) (1+deep());
+		
+		return pivot;
+	}
 	
- */
-	AvlNode<T> equilibrium(){
+	
+	private AvlNode<T> equilibrium(){
 		if ( (nleft - nright ) > 1 ){
-			return shiftL();
+			if ( left.nleft > left.nright ) {
+				return shiftLL();
+			}else {
+				return shiftLR();
+			}
 		} else if ( (nright - nleft ) > 1 ){
-			return shiftR();
+			if ( right.nright > right.nleft ) {
+				return shiftRR();
+			}else {
+				return shiftRL();
+			}
 		}
 		return this;
 	}
-	AvlNode<T> insertL(AvlNode<T> in) {
+	private AvlNode<T> insertL(AvlNode<T> in) {
 		if ( left == null ) {
 			in.parent = this;
 			left = in;
 		}else{
 			left = left.insert(in);
 		}
-		nleft = 1 + left.deep();
-		// @@@
-//		return equilibrium();
-		System.out.println("--befor---");
-		AvlTreeTest.dump(this,1);
-		System.out.println("");
-		AvlNode<T> t = equilibrium();
-		System.out.println("--after---");
-		AvlTreeTest.dump(t,1);
-		System.out.println("");
-		return t;
+		nleft = (short) (1 + left.deep());
+		return equilibrium();
 	}
-	AvlNode<T> insertR(AvlNode<T> in) {
+	private AvlNode<T> insertR(AvlNode<T> in) {
 		if ( right == null ) {
 			in.parent = this;
 			right = in;
 		}else{
 			right = right.insert(in);
 		}
-		nright = 1 + right.deep();
+		nright = (short) (1 + right.deep());
 		return equilibrium();
 	}
+
 	AvlNode<T> insert(AvlNode<T> in) {
 		int cmp = comparator.compare(t, in.t);
-//		int cmp = t.compareTo(in.t); 
 		if ( cmp > 0 ) {
 			return insertL(in);
 		} else if ( cmp < 0 ){
@@ -268,14 +260,16 @@ A(11)
 		if ( right != null ) {
 			right.parent = null;
 		}
-		if ( left == null && right != null ) {
+		if ( left == null && right == null ) {
+			return (root==this)?null:root;
+		} else if ( left == null && right != null ) {
 			c = right;
 		} else if ( right == null && left != null ) {
 			c = left;
-		} else if ( (nright + left.nright) < (nleft + right.nleft) ) {
-			c = left.insert(right);
-		} else {
+		} else if ( nright < nleft ) {
 			c = right.insert(left);
+		} else {
+			c = left.insert(right);
 		}
 		if ( parent == null ) {
 			return c;
@@ -327,115 +321,109 @@ A(11)
 		}
 	}
 	
-	
-	StdIterator<T> find(T in,Operation<T> op) {
+	AvlNode<T> find(T in,Operation<T> op) {
 		int cmp = comparator.compare(t, in);
-//		int cmp = t.compareTo(in); 
 		if ( cmp > 0 ) {
 			// in < t
-			if( left != null) {
-				return left.find(in, op);
-			}
-			return op.doEnd(cmp,this,in);
+			return op.doLeft(this,in);
 		} else if ( cmp < 0 ){
 			// in >= t
-			if ( right != null ) {
-				return right.find(in,op);
-			}
-			return op.doEnd(cmp,this,in);
+			return op.doRight(this,in);
 		} else {
 			return op.doEqual(this,in);
 		}
 	}
-}
-
-abstract class Operation<T> {
-	public StdIterator<T> it = new StdIterator<T>();
-	public abstract StdIterator<T> doEqual(AvlNode<T> h,T in);
-	public StdIterator<T> doEnd(int cmp,AvlNode<T> h,T in) {
-		return it;
-	}
-}
-class FindOp<T> extends Operation<T>{
-	@Override
-	public StdIterator<T> doEqual(AvlNode<T> h,T in){
-		it.h = h;
-		return it;
-	}
-}
-class FindLastOp<T> extends Operation<T>{
-	@Override
-	public StdIterator<T> doEqual(AvlNode<T> h,T in){
-		it.h = h;
-		if ( h.right == null ) {
-			return doEnd(0,h,in);
-		}
-		return h.right.find(in, this);
-	}
-}
-class FindFirstOp<T> extends Operation<T>{
-	@Override
-	public StdIterator<T> doEqual(AvlNode<T> h,T in){
-		it.h = h;
-		if ( h.left == null ) {
-			return doEnd(0,h,in);
-		}
-		return h.left.find(in, this);
-	}
-}
-class EqualRangeOp<T> extends Operation<T>{
-	Pair<StdIterator<T>,StdIterator<T>> p = new Pair<StdIterator<T>, StdIterator<T>>(AvlTree.itend,AvlTree.itend);
-	@Override
-	public StdIterator<T> doEqual(AvlNode<T> h,T in){
-		it.h = h;
-		if ( p.second.isEnd() ) {
-			p.second = new StdIterator<T>(it);
-			if ( h.left != null ) {
-				h.left.find(in, this);
+	static abstract class Operation<T> {
+		public AvlNode<T> curNode = null;
+		abstract AvlNode<T> doEqual(AvlNode<T> node,T in);
+		AvlNode<T> callLeft(AvlNode<T> node,T in){
+			if ( node.left != null ) {
+				return node.left.find(in, this);
 			}
-			p.first  = it;
-			it = p.second;
-			if ( h.right != null ) {
-				h.right.find(in, this);
+			return curNode;
+		}
+		AvlNode<T> callRight(AvlNode<T> node,T in) {
+			if ( node.right!= null ) {
+				return node.right.find(in,this);
 			}
-			return it.next();
-		} else {
-			if ( p.first.isEnd() ){
-				if ( h.left != null )
-					return h.left.find(in, this);
+			return curNode;
+		}
+		AvlNode<T> doLeft(AvlNode<T> node,T in) {
+			return callLeft(node,in);
+		}
+		AvlNode<T> doRight(AvlNode<T> node,T in) {
+			return callRight(node,in);
+		}
+	}
+	static class FindOp<T> extends Operation<T>{
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			curNode = node;
+			return curNode;
+		}
+	}
+	static class FindLastOp<T> extends Operation<T>{
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			curNode = node;
+			return callRight(node, in);
+		}
+	}
+	static class FindFirstOp<T> extends Operation<T>{
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			curNode = node;
+			return callLeft(node,in);
+		}
+	}
+	static class EqualRangeOp<T> extends Operation<T>{
+		AvlNode<T> firstEq = null;
+		AvlNode<T> upper   = null;
+		boolean first = true;
+		Pair<StdIterator<T>,StdIterator<T>> p = new Pair<StdIterator<T>, StdIterator<T>>(AvlTree.itend,AvlTree.itend);
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			curNode = node;
+			if ( firstEq == null) {
+				firstEq = node;
+				callLeft(node, in);
+				p.first  = new StdIterator<T>(curNode);
+				callRight(firstEq, in);
+				p.second = new StdIterator<T>(upper);
+				return curNode;
 			} else {
-				if ( h.right != null )
-					return h.right.find(in, this);
+				if ( p.first.isEnd() ) {
+					return callLeft(node, in);
+				} else {
+					return callRight(node, in);
+				}
 			}
-			return it;
+		}
+		AvlNode<T> doLeft(AvlNode<T> node, T in) {
+			upper = node;
+			return callLeft(node, in);
 		}
 	}
-}
-
-class UpperBoundOp<T> extends FindLastOp<T>{
-	@Override
-	public StdIterator<T> doEnd(int cmp,AvlNode<T> h,T in) {
-		if ( it.isEnd() ) {
-			it.h = h;
-			if ( cmp < 0 ) {
-				it.next();
-			}
-			return it;
+	
+	static class UpperBoundOp<T> extends Operation<T>{
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			return callRight(node, in);
 		}
-		return it.next();
+		AvlNode<T> doLeft(AvlNode<T> node, T in) {
+			curNode = node;
+			return callLeft(node, in);
+		}
 	}
-}
-
-class LowerBoundOp<T> extends FindFirstOp<T>{
-	@Override
-	public StdIterator<T> doEnd(int cmp,AvlNode<T> h,T in) {
-		if ( it.isEnd() ) {
-			it.h = h;
-			if ( cmp > 0 ) {
-				it.prev();
-			}
-			return it;
+	
+	static class LowerBoundOp<T> extends Operation<T>{
+		@Override
+		AvlNode<T> doEqual(AvlNode<T> node,T in){
+			return callLeft(node, in);
 		}
-		return it.prev();
+		AvlNode<T> doRight(AvlNode<T> node, T in) {
+			curNode = node;
+			return callRight(node, in);
+		};
 	}
 }

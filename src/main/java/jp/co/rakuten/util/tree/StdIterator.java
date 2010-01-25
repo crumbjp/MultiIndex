@@ -1,38 +1,38 @@
 package jp.co.rakuten.util.tree;
 
 public class StdIterator<T> {
-	AvlNode<T> h = null;
+	AvlNode<T> node = null;
 	public StdIterator () { }
-	public StdIterator (AvlNode<T> h) {
-		this.h = h;
+	public StdIterator (AvlNode<T> node) {
+		this.node = node;
 	}
 	public StdIterator (StdIterator<T> t) {
-		this.h = t.h;
+		this.node = t.node;
 	}
 	public T get(){
-		return h.t;
+		return node.t;
 	}
 	public boolean equals(StdIterator<T> it) {
 		if ( isEnd() ){
 			return it.isEnd();
 		}
-		return h.equals(it.h);
+		return node.equals(it.node);
 	}
 	public boolean isEnd() {
-		if ( h == null ) {
+		if ( node == null ) {
 			return true;
 		}
 		return false;
 	}
 	public StdIterator<T> next() {
-		if ( h != null ) {
-			h = h.next(true);
+		if ( node != null ) {
+			node = node.next(true);
 		}
 		return this;
 	}
 	public StdIterator<T> prev() {
-		if ( h != null ) {
-			h = h.prev(true);
+		if ( node != null ) {
+			node = node.prev(true);
 		}
 		return this;
 	}

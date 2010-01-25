@@ -35,6 +35,7 @@ public class AvlTreeTest extends TestCase {
 	}
 	@Override
 	protected void setUp() throws Exception {
+		dump = true;
 		tree.insert(new AvlTreeData<String>("W"));
 		tree.insert(new AvlTreeData<String>("A"));
 		tree.insert(new AvlTreeData<String>("K"));
@@ -51,7 +52,8 @@ public class AvlTreeTest extends TestCase {
 		tree.insert(new AvlTreeData<String>("I"));
 		tree.insert(new AvlTreeData<String>("Y"));
 		tree.insert(new AvlTreeData<String>("M"));
-
+		dump(tree);
+		
 		uniqueOrder.add(2);	// A
 		uniqueOrder.add(4);	// A
 		uniqueOrder.add(6);	// A
@@ -216,8 +218,9 @@ public class AvlTreeTest extends TestCase {
 		dump = true;
 		dump(tree);
 		tree.erase(tree.find(new AvlTreeData<String>("K")));
-		dump(tree);
+//		dump(tree);
 	}
+
 	public static boolean dump = false;
 	public static void dump (AvlTree h) {
 		System.out.println("-------------------------------------------");
@@ -254,4 +257,5 @@ public class AvlTreeTest extends TestCase {
 			}
 		}
 	}
+
 }

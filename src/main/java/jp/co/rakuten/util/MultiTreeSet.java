@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.TreeSet;
 
-
 public class MultiTreeSet<T extends Comparable<T> > implements MultiSet<T> {
 	static class MultiSetIterator<T extends Comparable<T>> implements Iterator<T> {
 		private final MultiTreeSet<T> origin;
