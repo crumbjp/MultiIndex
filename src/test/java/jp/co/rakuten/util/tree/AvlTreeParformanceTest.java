@@ -13,14 +13,14 @@ import junit.framework.TestCase;
 
 public class AvlTreeParformanceTest extends TestCase {
 	
-	static final int N = 500000;
+	static final int N = 100000;
 	Integer[] datas = new  Integer[N];
 
 	AvlTree<Integer> tree = new AvlTree<Integer>(); 
 	TreeSet<Integer> set = new TreeSet<Integer>();
 	@Override
 	protected void tearDown() throws Exception {
-/*
+//*
 		tree.begin();
 		tree.last();
 		tree.end();
@@ -149,7 +149,7 @@ public class AvlTreeParformanceTest extends TestCase {
 		
 		long ts = System.currentTimeMillis();
 		for ( int i = 0 ; i < datas.length; i++) {
-			tree.findFirst(datas[i]);
+			tree.findLast(datas[i]);
 		}
 		long te = System.currentTimeMillis();
 
