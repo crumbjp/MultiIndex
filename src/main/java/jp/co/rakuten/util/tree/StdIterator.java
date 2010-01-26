@@ -26,13 +26,13 @@ public class StdIterator<T> {
 	}
 	public StdIterator<T> next() {
 		if ( node != null ) {
-			node = node.next(true);
+			node = node.next();
 		}
 		return this;
 	}
 	public StdIterator<T> prev() {
 		if ( node != null ) {
-			node = node.prev(true);
+			node = node.prev();
 		}
 		return this;
 	}
