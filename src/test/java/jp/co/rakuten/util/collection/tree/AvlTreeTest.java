@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 import jp.co.rakuten.util.collection.tree.AvlNode;
 import jp.co.rakuten.util.collection.tree.AvlTree;
-import jp.co.rakuten.util.collection.tree.Pair;
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import junit.framework.TestCase;
 

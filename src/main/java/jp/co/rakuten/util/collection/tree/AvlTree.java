@@ -2,6 +2,8 @@ package jp.co.rakuten.util.collection.tree;
 
 import java.util.Comparator;
 
+import jp.co.rakuten.util.collection.Pair;
+
 public class AvlTree<T,K> {
 	static final AvlIterator itend = new AvlIterator((AvlTree)null);
 	AvlNode<T> avl = null;

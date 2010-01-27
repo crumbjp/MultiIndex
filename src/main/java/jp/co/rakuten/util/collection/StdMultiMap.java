@@ -1,6 +1,5 @@
 package jp.co.rakuten.util.collection;
 
-import jp.co.rakuten.util.collection.tree.Pair;
 
 public interface StdMultiMap<K,V> {
 	public void clear();

@@ -2,6 +2,7 @@ package jp.co.rakuten.util.collection.tree;
 
 import java.util.Comparator;
 
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdMap;
 
 public class AvlTreeMap<K,V> implements StdMap<K,V>{

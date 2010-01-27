@@ -1,7 +1,5 @@
 package jp.co.rakuten.util.collection.tree;
 
-import jp.co.rakuten.util.collection.tree.AvlTreeTest;
-
 public class AvlNode<T> {
 	short			nleft  = 0;
 	short			nright = 0;
@@ -114,10 +112,6 @@ public class AvlNode<T> {
 	private AvlNode<T> shiftLR(){
 		AvlNode<T> pivot = left.right;
 		AvlNode<T> L = left;
-		if ( pivot == null ) {
-			AvlTreeTest.dump = true;
-			AvlTreeTest.dump(this,1);
-		}
 		AvlNode<T> C = pivot.left;
 		AvlNode<T> D = pivot.right;
 		
@@ -169,10 +163,6 @@ public class AvlNode<T> {
 	private AvlNode<T> shiftRL(){
 		AvlNode<T> pivot = right.left;
 		AvlNode<T> R = right;
-		if ( pivot == null ) {
-			AvlTreeTest.dump = true;
-			AvlTreeTest.dump(this,1);
-		}
 		AvlNode<T> C = pivot.right;
 		AvlNode<T> D = pivot.left;
 		

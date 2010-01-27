@@ -1,13 +1,12 @@
 package jp.co.rakuten.util.multiindex;
 
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMultiMap;
 import jp.co.rakuten.util.collection.tree.AvlIterator;
 import jp.co.rakuten.util.collection.tree.AvlTree;
 import jp.co.rakuten.util.collection.tree.AvlTreeMultiMap;
 import jp.co.rakuten.util.collection.tree.FindComparator;
-import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMap;
-import jp.co.rakuten.util.collection.tree.Pair;
 import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMultiMap;
 
 import java.util.Comparator;

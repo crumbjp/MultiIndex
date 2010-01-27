@@ -1,6 +1,5 @@
 package jp.co.rakuten.util.collection;
 
-import jp.co.rakuten.util.collection.tree.Pair;
 
 public interface StdMultiSet<T> {
 	public void clear();

@@ -1,6 +1,7 @@
 package jp.co.rakuten.util.collection.tree;
 
 import jp.co.rakuten.util.collection.ConstStdIterator;
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMap;
 

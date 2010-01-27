@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jp.co.rakuten.util.collection.CompatibleIterable;
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
-import jp.co.rakuten.util.collection.tree.Pair;
 import junit.framework.TestCase;
 
 class MultiIndexData implements Comparable<MultiIndexData> {
