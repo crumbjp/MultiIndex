@@ -1,8 +1,9 @@
 package jp.co.rakuten.util.multiindex;
-import java.util.List;
+
+import jp.co.rakuten.util.collection.tree.AvlTree;
 
 public interface Index <T> {
-	public void opInit   (final List<Container<T>> origin,final Integer size);
+	public void opInit   (final AvlTree<Container<T>,Container<T>> origin,final Integer size);
 	public void opAdd    (final Container<T> c);
 	public void opRemove (final Container<T> c);
 	public void opModify (final Container<T> c,final T t);

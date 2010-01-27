@@ -1,16 +1,18 @@
 package jp.co.rakuten.util.multiindex;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class OrderedUniqueIndex<K,T> extends UniqueIndex<K,T>{
+public class OrderedUniqueIndex<K extends Comparable<K>,T> extends UniqueIndex<K,T>{
+	Field field;
 	public OrderedUniqueIndex(final Field field) {
-		super(field);
+		this.field = field;
 	}
 	@Override
-	protected Map<K, Container<T>> createContainer(final List<Container<T>> origin,final Integer size) {
-		return new TreeMap<K,Container<T>>();
+	protected K getKey(final T t) {
+		try {
+			return (K)this.field.get(t);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

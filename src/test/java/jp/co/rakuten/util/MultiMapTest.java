@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import jp.co.rakuten.util.tree.Pair;
+import jp.co.rakuten.util.bk.ComparablePair;
+import jp.co.rakuten.util.bk.MultiMap;
+import jp.co.rakuten.util.bk.MultiTreeMap;
+import jp.co.rakuten.util.collection.tree.Pair;
 import junit.framework.TestCase;
 
 class MultiMapData implements Comparable<MultiMapData>{

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import jp.co.rakuten.util.bk.MultiTreeSet;
 import junit.framework.TestCase;
 
 class MultiSetData implements Comparable<MultiSetData>{

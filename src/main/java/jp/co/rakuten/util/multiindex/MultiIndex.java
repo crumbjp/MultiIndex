@@ -1,37 +1,52 @@
 package jp.co.rakuten.util.multiindex;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.Comparator;
+
+import jp.co.rakuten.util.collection.tree.AvlTree;
+import jp.co.rakuten.util.collection.tree.FindComparator;
+
 
 public class MultiIndex<T> {
 	private final IndexBy<T> indexBy;
-	private final ArrayList<Container<T> > dataContainer;
+//	private final ArrayList<Container<T> > dataContainer;
+	private final AvlTree<Container<T>,Container<T>> dataContainer = new AvlTree<Container<T>,Container<T>>(
+			new Comparator<Container<T>>() {
+				@Override
+				public int compare(Container<T> o1, Container<T> o2) {
+					return o1.id.compareTo(o2.id);
+				}
+			},
+			new FindComparator<Container<T>,Container<T>> () {
+				@Override
+				public int compare(Container<T> o1, Container<T> o2) {
+					return o1.id.compareTo(o2.id);
+				}
+			}
+	);
 	private final Integer size;
 	private final static Integer DEFAULT_SIZE = 4096;
 	
 	public MultiIndex(final IndexBy<T> indexBy ) {
 		this.size = DEFAULT_SIZE;
 		this.indexBy = indexBy;
-		this.dataContainer = new ArrayList<Container<T> >();
 		for ( Index<T> index : indexBy )
 			index.opInit(this.dataContainer,this.size);
 	}
 	public MultiIndex(final IndexBy<T> indexBy , final Integer size ) {
 		this.size = size;
 		this.indexBy = indexBy;
-		this.dataContainer = new ArrayList<Container<T> >();
 		for ( Index<T> index : indexBy )
 			index.opInit(this.dataContainer,this.size);
 	}
 	
 	public Index<T> index(final int n){
-		return indexBy.get(n);
+		return indexBy.getIndex(n);
 	}
 	void add(final T t) {
 		Container<T> c = new Container<T>(t);
 		for ( Index<T> index : indexBy )
 			index.opAdd(c);
-		this.dataContainer.add(c);
+		this.dataContainer.insert(c);
 	}
 	boolean safeAdd(final T t) {
 		for ( Index<T> index : indexBy )
@@ -43,12 +58,12 @@ public class MultiIndex<T> {
 	public void remove(final Container<T> c){
 		for ( Index<T> index : indexBy ) 
 			index.opRemove(c);
-		this.dataContainer.remove(c);
+		this.dataContainer.erase(this.dataContainer.find(c));
 	}
 	public void modify(final Container<T> c , final T t) {
 		for ( Index<T> index : indexBy ) 
 			index.opModify(c,t);
-		c.pair.second = t;
+		c.t = t;
 	}
 	public boolean safeModify(final Container<T> c , final T t) {
 		for ( Index<T> index : indexBy )

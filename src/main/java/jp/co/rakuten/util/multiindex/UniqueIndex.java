@@ -1,82 +1,72 @@
 package jp.co.rakuten.util.multiindex;
 
-import java.lang.reflect.Field;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
+import jp.co.rakuten.util.collection.StdMap;
+import jp.co.rakuten.util.collection.tree.AvlTree;
+import jp.co.rakuten.util.collection.tree.AvlTreeMap;
+import jp.co.rakuten.util.collection.tree.FindComparator;
+import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMap;
+import jp.co.rakuten.util.collection.tree.Pair;
 
-import jp.co.rakuten.util.UnmodifiableMapWrapper;
+import java.util.Comparator;
 
-
-public abstract class UniqueIndex<K,T> extends UnmodifiableMapWrapper<K,Container<T>> implements Index<T> , Map<K,Container<T>> , Iterable<Container<T>>{
-	private Field field;
-	protected abstract Map<K,Container<T>> createContainer(final List<Container<T>> origin,final Integer size); 
-	public UniqueIndex(final Field field) {
-		this.field = field;
+public abstract class UniqueIndex<K extends Comparable<K>,T> extends UnmodifiableAvlTreeMap<K, Container<T>> implements Index<T> , StdMap<K,Container<T>> {
+	AvlTreeMap<K,Container<T>> container = new AvlTreeMap<K, Container<T>>(
+			new AvlTree<Pair<K,Container<T>>, K>(
+					new Comparator<Pair<K,Container<T>>>() {
+						public int compare(Pair<K,Container<T>> o1, Pair<K,Container<T>> o2) {
+							return o1.first.compareTo(o2.first);
+						}
+					},
+					new FindComparator<Pair<K,Container<T>>, K>() {
+						public int compare(Pair<K,Container<T>> o1, K o2) {
+							return o1.first.compareTo(o2);
+						}
+					}
+			)
+	); 
+	protected abstract K getKey(final T t);
+	public UniqueIndex() {
 	}
 	@Override
-	public Iterator<Container<T>> iterator() {
-		return new Iterator<Container<T>>() {
-			Iterator<Map.Entry<K, Container<T>>> it = container.entrySet().iterator();
-			public boolean hasNext() {
-				return it.hasNext();
-			};
-			public Container<T> next() {
-				return it.next().getValue();
-			};
-			public void remove() {
-				it.remove();
-			};
-		};
+	public void opInit(final AvlTree<Container<T>,Container<T>> origin, final Integer size) {
+		avlTree = container.getTree(); 
 	}
 	@Override
-	public void opInit   (final List<Container<T>> origin,final Integer size){
-		this.container = createContainer(origin,size);
-	}
-	@Override
-	public void opClear () {
-		this.container.clear();
-	}
-	@SuppressWarnings("unchecked")
-	private K getKey(final T t) {
-		try {
-			return (K)this.field.get(t);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
+	public void opClear(){
+		this.avlTree.clear();
 	}
 	@Override
 	public void opAdd(final Container<T> c) {
-		K key = this.getKey(c.pair.second);
-		if ( this.container.put(key, c) != null )
-			throw new RuntimeException("ADD : Unique-index is specified conflicting key !");
+		K k = getKey(c.t);
+		if ( ! container.insert(k,c) ) 
+			throw new RuntimeException("ADD : Identity is specified conflicting key !");
 	}
 	@Override
-	public void opRemove(final Container<T> c){
-		K key = this.getKey(c.pair.second);
-		this.container.remove(key);
+	public void opRemove(final Container<T> c) {
+		K k = getKey(c.t);
+		container.find(k).erase();
 	}
 	@Override
-	public void opModify(final Container<T> c, final T t){
-		K oldKey = this.getKey(c.pair.second);
-		K newKey = this.getKey(t);
+	public void opModify(final Container<T> c, final T t) {
+		K newKey = getKey(t);
+		K oldKey = getKey(c.t);
 		if (! oldKey.equals(newKey) ) {
-			this.container.remove(oldKey); 
-			if ( this.container.put(newKey,c) != null ) 
-				throw new RuntimeException("MODIFY : Unique-index is specified conflicting key !");
+			container.find(oldKey).erase();
+			if ( ! container.insert(newKey,c) ) 
+				throw new RuntimeException("MODIFY : Identity is specified conflicting key !");
 		}
 	}
 	@Override
 	public boolean opCheckAdd(final T t) {
-		K key = this.getKey(t);
-		return !this.container.containsKey(key);
+		K k = getKey(t);
+		return container.find(k).isEnd();
 	}
 	@Override
 	public boolean opCheckModify(final Container<T> c, final T t) {
-		K oldKey = this.getKey(c.pair.second);
-		K newKey = this.getKey(t);
+		K newKey = getKey(t);
+		K oldKey = getKey(c.t);
 		if (! oldKey.equals(newKey) ) {
-			return ! this.containsKey(newKey);
+			return container.find(newKey).isEnd();
 		}
 		return true;
 	}

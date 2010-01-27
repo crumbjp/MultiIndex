@@ -1,14 +1,14 @@
 package jp.co.rakuten.util.multiindex;
 
-import jp.co.rakuten.util.tree.Pair;
-
 public class Container <T> {
 	private static Integer currentUniqueId = 0;
-	final Pair<Integer,T> pair;
+	final Integer id;
+	T        t;
 	public Container(final T t) {
-		this.pair = new Pair<Integer, T>(++currentUniqueId, t);
+		this.id = ++currentUniqueId;
+		this.t  = t;
 	}
 	public T get(){
-		return this.pair.second;
+		return t;
 	}
 }
