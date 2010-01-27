@@ -10,7 +10,7 @@ import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMap;
 import java.util.Comparator;
 
 public abstract class UniqueIndex<K extends Comparable<K>,T> extends UnmodifiableAvlTreeMap<K, Container<T>> implements Index<T> , StdMap<K,Container<T>> {
-	AvlTreeMap<K,Container<T>> container = new AvlTreeMap<K, Container<T>>(
+	private AvlTreeMap<K,Container<T>> container = new AvlTreeMap<K, Container<T>>(
 			new AvlTree<Pair<K,Container<T>>, K>(
 					new Comparator<Pair<K,Container<T>>>() {
 						public int compare(Pair<K,Container<T>> o1, Pair<K,Container<T>> o2) {

@@ -3,8 +3,8 @@ package jp.co.rakuten.util.collection;
 import java.util.Iterator;
 
 public class CompatibleIterator<T> implements Iterator<T> {
-	StdIterator<T> it;
-	boolean hasNext;
+	private StdIterator<T> it;
+	private boolean hasNext;
 	public CompatibleIterator(StdIterator<T> it) {
 		this.it = it;
 		this.hasNext = true;

@@ -42,13 +42,13 @@ public class MultiIndex<T> {
 	public Index<T> index(final int n){
 		return indexBy.getIndex(n);
 	}
-	void add(final T t) {
+	public void add(final T t) {
 		Container<T> c = new Container<T>(t);
 		for ( Index<T> index : indexBy )
 			index.opAdd(c);
 		this.dataContainer.insert(c);
 	}
-	boolean safeAdd(final T t) {
+	public boolean safeAdd(final T t) {
 		for ( Index<T> index : indexBy )
 			if ( !index.opCheckAdd(t) )
 				return false;
@@ -76,40 +76,5 @@ public class MultiIndex<T> {
 		for ( Index<T> index : indexBy )
 			index.opClear();
 	}
-	/*
-	public static void main(String[] args) throws Throwable{
-		Container<Data> c3 = ((UniqueIndex<Integer,Data>)mi.index(1)).get(1);
-		System.out.println("Safe modify (false) : "+mi.safeModify(c3,new Data(2,4l,"Z")));
-		System.out.println("Safe modify (true) : "+mi.safeModify(c3,new Data(11,4l,"Z")));
-		Container<Data> c4 = ((UniqueIndex<Integer,Data>)mi.index(1)).get(11);
-		System.out.println("Safe modify (true) : "+mi.safeModify(c4,new Data(111,4l,"Z")));
-		
-		Container<Data> c1 = ((UniqueIndex<Integer,Data>)mi.index(1)).get(6);
-		mi.remove(c1);
-		Container<Data> c2 = ((UniqueIndex<Integer,Data>)mi.index(1)).get(5);
-		mi.modify(c2, new Data(55,88l,"NOP"));
-		
-		System.out.println("Sequence Test");
-		SequenceIndex<Data> sequence = (SequenceIndex<Data>)mi.index(0);
-		for (Container<Data> c : sequence){
-			c.get().dump();
-		}
-		System.out.println("Unique (first) Test");
-		UniqueIndex<Integer,Data> unique1 = (UniqueIndex<Integer,Data>)mi.index(1);
-		for (Map.Entry<Integer,Container<Data>> p : unique1.entrySet() ){
-			p.getValue().get().dump();
-		}
-		System.out.println("Unique (second) Test");
-		UniqueIndex<Long,Data> unique2 = (UniqueIndex<Long,Data>)mi.index(2);
-		for (Map.Entry<Long,Container<Data>> p : unique2.entrySet() ){
-			p.getValue().get().dump();
-		}
-		System.out.println("Identity (first) Test");
-		IdentityIndex<Data> identity1 = (IdentityIndex<Data>)mi.index(3);
-		for (Data c : identity1.keySet() ){
-			identity1.get(c).get().dump();
-		}
-	}
-*/
 }
 

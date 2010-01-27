@@ -9,7 +9,7 @@ public class AvlTree<T,K> {
 	AvlNode<T> avl = null;
 	private final Comparator<T> comparator;
 	private final FindComparator<T,K> findComparator;
-	long size = 0;
+	private long size = 0;
 	public AvlTree( final Comparator<T> comparator ) {
 		this.comparator = comparator;
 		this.findComparator = new FindComparator<T, K>() {

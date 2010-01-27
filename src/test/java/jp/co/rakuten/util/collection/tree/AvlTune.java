@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import jp.co.rakuten.util.collection.tree.AvlTree;
 
-public class AvlTune extends AvlTreeParformanceTest{
+public class AvlTune {
 
 	/**
 	 * @param args

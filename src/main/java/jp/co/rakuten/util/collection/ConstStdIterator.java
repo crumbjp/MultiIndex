@@ -1,7 +1,7 @@
 package jp.co.rakuten.util.collection;
 
 public class ConstStdIterator<T> implements StdIterator<T>{
-	final StdIterator<T> it; 
+	private final StdIterator<T> it; 
 	public ConstStdIterator(StdIterator<T> it) {
 		this.it = it;
 	}

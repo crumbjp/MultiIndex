@@ -12,7 +12,7 @@ import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMultiMap;
 import java.util.Comparator;
 
 public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, Container<T>> implements Index<T> , StdMultiMap<K,Container<T>> {
-	AvlTreeMultiMap<K,Container<T>> container = new AvlTreeMultiMap<K, Container<T>>(
+	private AvlTreeMultiMap<K,Container<T>> container = new AvlTreeMultiMap<K, Container<T>>(
 			new AvlTree<Pair<K,Container<T>>, K>(
 					new Comparator<Pair<K,Container<T>>>() {
 						public int compare(Pair<K,Container<T>> o1, Pair<K,Container<T>> o2) {
