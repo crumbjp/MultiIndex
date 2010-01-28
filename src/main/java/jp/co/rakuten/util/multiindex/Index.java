@@ -1,6 +1,6 @@
 package jp.co.rakuten.util.multiindex;
 
-import jp.co.rakuten.util.collection.tree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.AvlTree;
 
 public interface Index <T> {
 	public void opInit   (final AvlTree<Container<T>,Container<T>> origin,final Integer size);

@@ -3,11 +3,11 @@ package jp.co.rakuten.util.multiindex;
 import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMultiMap;
-import jp.co.rakuten.util.collection.tree.AvlIterator;
-import jp.co.rakuten.util.collection.tree.AvlTree;
-import jp.co.rakuten.util.collection.tree.AvlTreeMultiMap;
-import jp.co.rakuten.util.collection.tree.FindComparator;
-import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeMultiMap;
+import jp.co.rakuten.util.collection.avltree.AvlIterator;
+import jp.co.rakuten.util.collection.avltree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.AvlTreeMultiMap;
+import jp.co.rakuten.util.collection.avltree.FindComparator;
+import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeMultiMap;
 
 import java.util.Comparator;
 
@@ -46,8 +46,8 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 	public void opRemove(final Container<T> c) {
 		K k = getKey(c.t);
 		Pair<StdIterator<Pair<K,Container<T>>>,StdIterator<Pair<K,Container<T>>>> pair = container.equlRange(k);
-		for (	AvlIterator<Pair<K,Container<T>>> it = (AvlIterator<Pair<K,Container<T>>>)pair.first,
-				itend = (AvlIterator<Pair<K,Container<T>>>)pair.second;
+		for (	AvlIterator<Pair<K,Container<T>>,K> it = (AvlIterator<Pair<K,Container<T>>,K>)pair.first,
+				itend = (AvlIterator<Pair<K,Container<T>>,K>)pair.second;
 			!it.equals(itend);
 			it.next())
 		{
@@ -63,8 +63,8 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 		K oldKey = getKey(c.t);
 		if (! oldKey.equals(newKey) ) {
 			Pair<StdIterator<Pair<K,Container<T>>>,StdIterator<Pair<K,Container<T>>>> pair = container.equlRange(oldKey);
-			for (	AvlIterator<Pair<K,Container<T>>> it = (AvlIterator<Pair<K,Container<T>>>)pair.first,
-					itend = (AvlIterator<Pair<K,Container<T>>>)pair.second;
+			for (	AvlIterator<Pair<K,Container<T>>,K> it = (AvlIterator<Pair<K,Container<T>>,K>)pair.first,
+					itend = (AvlIterator<Pair<K,Container<T>>,K>)pair.second;
 				!it.equals(itend);
 				it.next())
 			{

@@ -2,8 +2,8 @@ package jp.co.rakuten.util.multiindex;
 
 import java.util.Comparator;
 
-import jp.co.rakuten.util.collection.tree.AvlTree;
-import jp.co.rakuten.util.collection.tree.FindComparator;
+import jp.co.rakuten.util.collection.avltree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.FindComparator;
 
 
 public class MultiIndex<T> {

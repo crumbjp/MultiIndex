@@ -1,7 +1,17 @@
 package jp.co.rakuten.util.collection;
-
+/**
+ * Unmodifiable iterator(Wrapped StdIterator).
+ *  
+ * @author hiroaki.kubota@mail.rakuten.co.jp
+ *
+ * @param <T> Target data-type. 
+ */
 public class ConstStdIterator<T> implements StdIterator<T>{
-	private final StdIterator<T> it; 
+	private final StdIterator<T> it;
+	/**
+	 * Instantiate with wrapping iterator.
+	 * @param it Wrapping iterator.
+	 */
 	public ConstStdIterator(StdIterator<T> it) {
 		this.it = it;
 	}
@@ -9,6 +19,13 @@ public class ConstStdIterator<T> implements StdIterator<T>{
 	public T get() {
 		return it.get();
 	}
+	/**
+	 * <pre>
+	 * Has not been permitted !!
+	 *   It'll throw UnsupportedOperationException.
+	 * </pre>
+	 * @throws UnsupportedOperationException
+	 */
 	@Override
 	public boolean replace(T t){
 		throw new UnsupportedOperationException("Operation has not been permitted .");
@@ -27,6 +44,13 @@ public class ConstStdIterator<T> implements StdIterator<T>{
 		it.prev();
 		return this;
 	}
+	/**
+	 * <pre>
+	 * Has not been permitted !!
+	 *   It'll throw UnsupportedOperationException.
+	 * </pre>
+	 * @throws UnsupportedOperationException
+	 */
 	@Override
 	public boolean erase(){
 		throw new UnsupportedOperationException("Operation has not been permitted .");

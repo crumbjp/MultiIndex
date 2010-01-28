@@ -1,7 +1,7 @@
 package jp.co.rakuten.util.collection;
 
-import jp.co.rakuten.util.collection.tree.AvlIterator;
-import jp.co.rakuten.util.collection.tree.AvlTreeSet;
+import jp.co.rakuten.util.collection.avltree.AvlIterator;
+import jp.co.rakuten.util.collection.avltree.AvlTreeSet;
 import junit.framework.TestCase;
 
 

@@ -1,8 +1,8 @@
 package jp.co.rakuten.util.multiindex;
 
 import jp.co.rakuten.util.collection.StdSet;
-import jp.co.rakuten.util.collection.tree.AvlTree;
-import jp.co.rakuten.util.collection.tree.UnmodifiableAvlTreeSet;
+import jp.co.rakuten.util.collection.avltree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeSet;
 
 public class SequenceIndex<T> extends UnmodifiableAvlTreeSet<Container<T>> implements Index<T> , StdSet<Container<T>>{
 

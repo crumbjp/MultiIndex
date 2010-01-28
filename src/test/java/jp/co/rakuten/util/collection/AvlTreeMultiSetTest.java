@@ -1,7 +1,7 @@
 package jp.co.rakuten.util.collection;
 
-import jp.co.rakuten.util.collection.tree.AvlIterator;
-import jp.co.rakuten.util.collection.tree.AvlTreeMultiSet;
+import jp.co.rakuten.util.collection.avltree.AvlIterator;
+import jp.co.rakuten.util.collection.avltree.AvlTreeMultiSet;
 import junit.framework.TestCase;
 
 
@@ -71,7 +71,7 @@ public class AvlTreeMultiSetTest extends TestCase{
 	}
 	public void testForwardIterator() {
 		int i = 0;
-		for ( AvlIterator<Integer> it = multiSet.begin(),itend = multiSet.end();
+		for ( AvlIterator<Integer,Integer> it = multiSet.begin(),itend = multiSet.end();
 			! it.equals(itend);
 			it.next() ){
 			assertEquals(new Integer(i++/2),it.get());
@@ -79,7 +79,7 @@ public class AvlTreeMultiSetTest extends TestCase{
 	}	
 	public void testBackIterator(){
 		int i = 19;
-		for ( AvlIterator<Integer> it = multiSet.last(),itend = multiSet.end();
+		for ( AvlIterator<Integer,Integer> it = multiSet.last(),itend = multiSet.end();
 			! it.equals(itend);
 			it.prev() ){
 			assertEquals(new Integer((i--)/2),it.get());

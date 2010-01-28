@@ -2,7 +2,7 @@ package jp.co.rakuten.util.collection;
 
 import java.util.Iterator;
 
-import jp.co.rakuten.util.collection.tree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.AvlTree;
 
 public class CompatibleReverseIterable<T> implements Iterable<T> {
 	private AvlTree tree;
