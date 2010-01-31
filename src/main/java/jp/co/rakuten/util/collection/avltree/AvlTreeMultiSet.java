@@ -46,6 +46,14 @@ public class AvlTreeMultiSet<T> implements StdMultiSet<T>{
 		return avlTree.findLast(t);
 	}
 	@Override
+	public AvlIterator<T,T> upperBound(T t) {
+		return avlTree.upperBound(t);
+	}
+	@Override
+	public AvlIterator<T,T> lowerBound(T t) {
+		return avlTree.lowerBound(t);
+	}
+	@Override
 	public AvlIterator<T,T> begin() {
 		return avlTree.begin();
 	}

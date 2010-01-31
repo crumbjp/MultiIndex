@@ -1,11 +1,14 @@
 package jp.co.rakuten.util.collection;
 /**
- * Set like C++ STL.
+ * Associative container like std::set of C++ STL.
+ *   This class provides basic I/F of associative container.
  * <pre>
  *  Features:
- *   - Associating datas have unique identity each other. 
+ *   - Entered datas are associated by identity of itself.
+ *   - Cannot enter data overlapping identity.
  *   - Always sorted.
- *   - Cannot random access.
+ *   - Can flexible iterate accessing (Another means java.lang.iterable).
+ *   
  * </pre>
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
@@ -19,13 +22,13 @@ public interface StdSet<T> {
 	
 	/**
 	 * Returns number of data in this container.  
-	 * @return
+	 * @return Returns number of associating. 
 	 */
 	public long size();
 	
 	/**
 	 * <pre>
-	 * Associates the date with the identity itself.
+	 * Enter the new data.
 	 *   Will be failure. If already associated same identity data in this container.
 	 * </pre>
 	 * 
@@ -36,8 +39,8 @@ public interface StdSet<T> {
 
 	/**
 	 * <pre>
-	 * Associates the date with the identity itself.
-	 *   Will be replace by new data. If already associated same identity data in this container.
+	 * Enter the new data.
+	 *   Will replace by new data. If already associated same identity data in this container.
 	 * </pre>
 	 * 
 	 * @param t specifying data.
@@ -47,7 +50,7 @@ public interface StdSet<T> {
 
 	/**
 	 * <pre>
-	 * Find data of having same identity in this container.
+	 * Find data by the specifying in this container.
 	 * </pre>
 	 * @param t specifying data.
 	 * @return Returns iterator of pointing the data or end of container.
@@ -91,6 +94,7 @@ public interface StdSet<T> {
 	 * @return Returns iterator of pointing the last data or end of container(when this container is empty).
 	 */
 	public StdIterator<T> last();
+
 	/**
 	 * Iterator of pointing end of container.
 	 *    

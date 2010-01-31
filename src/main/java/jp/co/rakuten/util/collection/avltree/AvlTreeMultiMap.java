@@ -72,6 +72,14 @@ public class AvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 		return avlTree.findLast(k);
 	}
 	@Override
+	public AvlIterator<Pair<K,V>,K> upperBound(K k) {
+		return avlTree.upperBound(k);
+	}
+	@Override
+	public AvlIterator<Pair<K,V>,K> lowerBound(K k) {
+		return avlTree.lowerBound(k);
+	}
+	@Override
 	public AvlIterator<Pair<K,V>,K> begin() {
 		return avlTree.begin();
 	}

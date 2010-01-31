@@ -77,6 +77,15 @@ public class AvlTreeMap<K,V> implements StdMap<K,V>{
 		return it.get().second;
 	}
 	@Override
+	public AvlIterator<Pair<K,V>,K> lowerBound(K k) {
+		return avlTree.lowerBound(k);
+	}
+	@Override
+	public AvlIterator<Pair<K,V>,K> upperBound(K k) {
+		return avlTree.upperBound(k);
+	}
+	
+	@Override
 	public AvlIterator<Pair<K,V>,K> begin() {
 		return avlTree.begin();
 	}

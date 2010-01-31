@@ -52,6 +52,15 @@ public class UnmodifiableAvlTreeMap<K,V> implements StdMap<K,V>{
 		return it.get().second;
 	}
 	@Override
+	public ConstStdIterator<Pair<K,V>> upperBound(K k) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.upperBound(k));
+	}
+	@Override
+	public ConstStdIterator<Pair<K,V>> lowerBound(K k) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.lowerBound(k));
+	}
+	
+	@Override
 	public ConstStdIterator<Pair<K,V>> begin() {
 		return new ConstStdIterator<Pair<K,V>>(avlTree.begin());
 	}

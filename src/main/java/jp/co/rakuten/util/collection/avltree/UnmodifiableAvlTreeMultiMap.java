@@ -48,6 +48,14 @@ public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 		return new ConstStdIterator<Pair<K,V>>(avlTree.findLast(k));
 	}
 	@Override
+	public ConstStdIterator<Pair<K,V>> upperBound(K k) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.upperBound(k));
+	}
+	@Override
+	public ConstStdIterator<Pair<K,V>> lowerBound(K k) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.lowerBound(k));
+	}
+	@Override
 	public ConstStdIterator<Pair<K,V>> begin() {
 		return new ConstStdIterator<Pair<K,V>>(avlTree.begin());
 	}
