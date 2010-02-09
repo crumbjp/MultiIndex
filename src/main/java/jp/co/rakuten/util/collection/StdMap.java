@@ -15,19 +15,9 @@ package jp.co.rakuten.util.collection;
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
  * @param <K> Key-type.
- * @param <V> Value--type. 
+ * @param <V> Value-type. 
  */
-public interface StdMap<K,V> {
-	/**
-	 * Remove all data from this container.
-	 */
-	public void clear();
-
-	/**
-	 * Returns number of data in this container.  
-	 * @return Returns number of associating. 
-	 */
-	public long size();
+public interface StdMap<K,V> extends StdContainer<Pair<K,V>>,StdSequence<Pair<K,V>>,StdRandomUnique<Pair<K,V>, K> {
 
 	/**
 	 * <pre>
@@ -80,60 +70,7 @@ public interface StdMap<K,V> {
 	 * Find data of having same key in this container.
 	 * </pre>
 	 * @param k specifying key.
-	 * @return Returns iterator of pointing the data or end of container.
-	 */
-	public StdIterator<Pair<K,V>> find(K k);
-
-	/**
-	 * <pre>
-	 * Find data of having same key in this container.
-	 * </pre>
-	 * @param k specifying key.
 	 * @return Returns value of the data or null.
 	 */
 	public V get(K k);
-
-	/**
-	 * <pre>
-	 * Find lowest data of upper than specifying in this container.
-	 * </pre>
-	 * 
-	 * @param k specifying key.
-	 * @return Returns iterator of pointing the data or end of container.
-	 */
-	public StdIterator<Pair<K,V>> upperBound(K k);
-
-	/**
-	 * <pre>
-	 * Find highest data of lower than specifying in this container.
-	 * </pre>
-	 * 
-	 * @param k specifying key.
-	 * @return Returns iterator of pointing the data or end of container.
-	 */
-	public StdIterator<Pair<K,V>> lowerBound(K k);
-	
-	/**
-	 * <pre>
-	 * Find lowest data in this container.
-	 * </pre>
-	 * 
-	 * @return Returns iterator of pointing the first data or end of container(when this container is empty).
-	 */
-	public StdIterator<Pair<K,V>> begin();
-
-	/**
-	 * <pre>
-	 * Find highest data in this container.
-	 * </pre>
-	 * 
-	 * @return Returns iterator of pointing the last data or end of container(when this container is empty).
-	 */
-	public StdIterator<Pair<K,V>> last();
-	/**
-	 * Iterator of pointing end of container.
-	 *    
-	 * @return Returns end of container.
-	 */
-	public StdIterator<Pair<K,V>> end();
 }

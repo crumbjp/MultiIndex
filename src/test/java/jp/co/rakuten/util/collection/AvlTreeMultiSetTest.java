@@ -87,13 +87,13 @@ public class AvlTreeMultiSetTest extends TestCase{
 	}	
 	public void testCompatibleIterable(){
 		int i = 0;
-		for ( Integer v : new CompatibleIterable<Integer>(multiSet.getTree())){
+		for ( Integer v : new CompatibleIterable<Integer>(multiSet)){
 			assertEquals(new Integer((i++)/2),v);
 		}
 	}
 	public void testCompatibleReverseIterable(){
 		int i = 19;
-		for ( Integer v : new CompatibleReverseIterable<Integer>(multiSet.getTree())){
+		for ( Integer v : new CompatibleReverseIterable<Integer>(multiSet)){
 			assertEquals(new Integer((i--)/2),v);
 		}
 	}

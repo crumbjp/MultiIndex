@@ -3,6 +3,7 @@ package jp.co.rakuten.util.collection.avltree;
 import java.util.Comparator;
 
 import jp.co.rakuten.util.collection.Pair;
+import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMap;
 
 public class AvlTreeMap<K,V> implements StdMap<K,V>{
@@ -84,7 +85,6 @@ public class AvlTreeMap<K,V> implements StdMap<K,V>{
 	public AvlIterator<Pair<K,V>,K> upperBound(K k) {
 		return avlTree.upperBound(k);
 	}
-	
 	@Override
 	public AvlIterator<Pair<K,V>,K> begin() {
 		return avlTree.begin();
@@ -97,7 +97,8 @@ public class AvlTreeMap<K,V> implements StdMap<K,V>{
 	public AvlIterator<Pair<K,V>,K> end() {
 		return avlTree.end();
 	}
-	public void erase(AvlIterator<Pair<K,V>,K> it) {
-		avlTree.erase(it);
+	@Override
+	public void erase(StdIterator<Pair<K,V>> it) {
+		avlTree.erase((AvlIterator<Pair<K,V>,K>)it);
 	}
 }

@@ -65,7 +65,8 @@ public class AvlIterator<T,K> implements StdIterator<T>{
 			throw new RuntimeException("Failure : Invalid iterator !");
 		return tree.erase(this);
 	}
-	public AvlTree getTree(){
+	@Override
+	public AvlTree<T,K> container(){
 		return tree;
 	}
 }

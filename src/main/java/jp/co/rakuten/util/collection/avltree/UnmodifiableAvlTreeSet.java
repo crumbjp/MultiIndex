@@ -54,4 +54,8 @@ public class UnmodifiableAvlTreeSet<T> implements StdSet<T>{
 	public StdIterator<T> end() {
 		return avlTree.end();
 	}
+	@Override
+	public void erase(StdIterator<T> it) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
+	}
 }

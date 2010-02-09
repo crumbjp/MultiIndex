@@ -65,7 +65,8 @@ public class AvlTreeMultiSet<T> implements StdMultiSet<T>{
 	public AvlIterator<T,T> end() {
 		return avlTree.end();
 	}
-	public void erase(AvlIterator<T,T> it) {
+	@Override
+	public void erase(StdIterator<T> it) {
 		avlTree.erase((AvlIterator<T,T>)it);
 	}
 }

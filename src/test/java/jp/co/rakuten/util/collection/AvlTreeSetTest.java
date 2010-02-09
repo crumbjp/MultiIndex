@@ -68,13 +68,13 @@ public class AvlTreeSetTest extends TestCase{
 	}	
 	public void testCompatibleIterable(){
 		int i = 0;
-		for ( Integer v : new CompatibleIterable<Integer>(set.getTree())){
+		for ( Integer v : new CompatibleIterable<Integer>(set)){
 			assertEquals(new Integer(i++),v);
 		}
 	}
 	public void testCompatibleReverseIterable(){
 		int i = 9;
-		for ( Integer v : new CompatibleReverseIterable<Integer>(set.getTree())){
+		for ( Integer v : new CompatibleReverseIterable<Integer>(set)){
 			assertEquals(new Integer(i--),v);
 		}
 	}

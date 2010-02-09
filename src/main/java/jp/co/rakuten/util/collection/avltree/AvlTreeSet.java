@@ -2,6 +2,7 @@ package jp.co.rakuten.util.collection.avltree;
 
 import java.util.Comparator;
 
+import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdSet;
 
 public class AvlTreeSet<T> implements StdSet<T>{
@@ -59,7 +60,8 @@ public class AvlTreeSet<T> implements StdSet<T>{
 	public AvlIterator<T,T> end() {
 		return avlTree.end();
 	}
-	public void erase(AvlIterator<T,T> it) {
+	@Override
+	public void erase(StdIterator<T> it) {
 		avlTree.erase((AvlIterator<T,T>)it);
 	}
 }

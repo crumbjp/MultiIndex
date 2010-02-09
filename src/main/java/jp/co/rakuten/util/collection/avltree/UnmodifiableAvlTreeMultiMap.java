@@ -67,4 +67,8 @@ public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 	public StdIterator<Pair<K,V>> end() {
 		return avlTree.end();
 	}
+	@Override
+	public void erase(StdIterator<Pair<K, V>> it) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
+	}
 }

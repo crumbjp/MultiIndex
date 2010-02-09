@@ -3,7 +3,6 @@ package jp.co.rakuten.util.multiindex;
 import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMultiMap;
-import jp.co.rakuten.util.collection.avltree.AvlIterator;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.AvlTreeMultiMap;
 import jp.co.rakuten.util.collection.avltree.FindComparator;
@@ -11,16 +10,24 @@ import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeMultiMap;
 
 import java.util.Comparator;
 
-public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, Container<T>> implements Index<T> , StdMultiMap<K,Container<T>> {
-	private AvlTreeMultiMap<K,Container<T>> container = new AvlTreeMultiMap<K, Container<T>>(
-			new AvlTree<Pair<K,Container<T>>, K>(
-					new Comparator<Pair<K,Container<T>>>() {
-						public int compare(Pair<K,Container<T>> o1, Pair<K,Container<T>> o2) {
+/**
+ * Base class of non-unique index.
+ * 
+ * @author hiroaki.kubota@mail.rakuten.co.jp
+ *
+ * @param <K> Ordering key-type
+ * @param <T> Target data-type
+ */
+public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, Record<T>> implements Index<T> , StdMultiMap<K,Record<T>> {
+	private AvlTreeMultiMap<K,Record<T>> container = new AvlTreeMultiMap<K, Record<T>>(
+			new AvlTree<Pair<K,Record<T>>, K>(
+					new Comparator<Pair<K,Record<T>>>() {
+						public int compare(Pair<K,Record<T>> o1, Pair<K,Record<T>> o2) {
 							return o1.first.compareTo(o2.first);
 						}
 					},
-					new FindComparator<Pair<K,Container<T>>, K>() {
-						public int compare(Pair<K,Container<T>> o1, K o2) {
+					new FindComparator<Pair<K,Record<T>>, K>() {
+						public int compare(Pair<K,Record<T>> o1, K o2) {
 							return o1.first.compareTo(o2);
 						}
 					}
@@ -30,7 +37,7 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 	public NonUniqueIndex() {
 	}
 	@Override
-	public void opInit(final AvlTree<Container<T>,Container<T>> origin, final Integer size) {
+	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
 		avlTree = container.getTree(); 
 	}
 	@Override
@@ -38,16 +45,16 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 		avlTree.clear();
 	}
 	@Override
-	public void opAdd(final Container<T> c) {
+	public void opAdd(final Record<T> c) {
 		K k = getKey(c.t);
 		container.insert(k,c); 
 	}
 	@Override
-	public void opRemove(final Container<T> c) {
+	public void opRemove(final Record<T> c) {
 		K k = getKey(c.t);
-		Pair<StdIterator<Pair<K,Container<T>>>,StdIterator<Pair<K,Container<T>>>> pair = container.equlRange(k);
-		for (	AvlIterator<Pair<K,Container<T>>,K> it = (AvlIterator<Pair<K,Container<T>>,K>)pair.first,
-				itend = (AvlIterator<Pair<K,Container<T>>,K>)pair.second;
+		Pair<StdIterator<Pair<K,Record<T>>>,StdIterator<Pair<K,Record<T>>>> pair = container.equlRange(k);
+		for (	StdIterator<Pair<K,Record<T>>> it = pair.first,
+				itend = pair.second;
 			!it.equals(itend);
 			it.next())
 		{
@@ -58,13 +65,13 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 		}
 	}
 	@Override
-	public void opModify(final Container<T> c, final T t) {
+	public void opModify(final Record<T> c, final T t) {
 		K newKey = getKey(t);
 		K oldKey = getKey(c.t);
 		if (! oldKey.equals(newKey) ) {
-			Pair<StdIterator<Pair<K,Container<T>>>,StdIterator<Pair<K,Container<T>>>> pair = container.equlRange(oldKey);
-			for (	AvlIterator<Pair<K,Container<T>>,K> it = (AvlIterator<Pair<K,Container<T>>,K>)pair.first,
-					itend = (AvlIterator<Pair<K,Container<T>>,K>)pair.second;
+			Pair<StdIterator<Pair<K,Record<T>>>,StdIterator<Pair<K,Record<T>>>> pair = container.equlRange(oldKey);
+			for (	StdIterator<Pair<K,Record<T>>> it = pair.first,
+					itend = pair.second;
 				!it.equals(itend);
 				it.next())
 			{
@@ -81,7 +88,7 @@ public abstract class NonUniqueIndex<K extends Comparable<K>,T> extends Unmodifi
 		return true;
 	}
 	@Override
-	public boolean opCheckModify(final Container<T> c, final T t) {
+	public boolean opCheckModify(final Record<T> c, final T t) {
 		return true;
 	}
 }

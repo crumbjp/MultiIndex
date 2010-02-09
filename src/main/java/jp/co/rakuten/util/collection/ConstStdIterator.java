@@ -60,4 +60,15 @@ public class ConstStdIterator<T> implements StdIterator<T>{
 		ConstStdIterator<T> in = (ConstStdIterator<T>)obj; 
 		return it.equals(in.it);
 	}
+	/**
+	 * <pre>
+	 * Has not been permitted !!
+	 *   It'll throw UnsupportedOperationException.
+	 * </pre>
+	 * @throws UnsupportedOperationException
+	 */
+	@Override
+	public Object container(){
+		throw new UnsupportedOperationException("Operation has not been permitted .");
+	}
 }

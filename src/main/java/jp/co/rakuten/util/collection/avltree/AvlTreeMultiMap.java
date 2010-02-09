@@ -102,8 +102,8 @@ public class AvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 		it.get().second = v;
 		return true;
 	}
-
-	public void erase(AvlIterator<Pair<K,V>,K> it) {
+	@Override
+	public void erase(StdIterator<Pair<K,V>> it) {
 		avlTree.erase((AvlIterator<Pair<K,V>,K>)it);
 	}
 }

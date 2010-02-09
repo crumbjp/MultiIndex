@@ -128,7 +128,7 @@ public class MultiIndexTest extends TestCase {
 //		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4
 //		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
 //		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6
-		Pair<StdIterator<Pair<String,Container<MultiIndexData>>>,StdIterator<Pair<String,Container<MultiIndexData>>>> p = orderedNonUnique.equlRange("abc");
+		Pair<StdIterator<Pair<String,Record<MultiIndexData>>>,StdIterator<Pair<String,Record<MultiIndexData>>>> p = orderedNonUnique.equlRange("abc");
 		assertEquals(new Integer(1),p.first.get().second.get().unique);
 		p.first.next();
 		assertEquals(new Integer(6),p.first.get().second.get().unique);
@@ -137,9 +137,9 @@ public class MultiIndexTest extends TestCase {
 	}
 	
 	public void testSafeAdd() {
-		assertFalse(mi.safeAdd(new MultiIndexData(0,4l,"abc"))); // Unique = 7
-		assertFalse(mi.safeAdd(new MultiIndexData(1,7l,"abc"))); // Unique = 8
-		assertTrue (mi.safeAdd(new MultiIndexData(0,7l,"abc"))); // Unique = 9
+		assertFalse(mi.add(new MultiIndexData(0,4l,"abc"))); // Unique = 7
+		assertFalse(mi.add(new MultiIndexData(1,7l,"abc"))); // Unique = 8
+		assertTrue (mi.add(new MultiIndexData(0,7l,"abc"))); // Unique = 9
 		
 		uniqueSequenceOrder.add(9);
 		uniqueIdentityOrder.add(0,9);
@@ -148,43 +148,43 @@ public class MultiIndexTest extends TestCase {
 		uniqueOrderedNonUniqueOrder.add(2,9);
 		
 		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
-		for ( Container<MultiIndexData> c : new CompatibleIterable<Container<MultiIndexData>>(sequence.getTree()) ) {
+		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(identity.getTree()) ) {
+		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
 		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(orderedUnique.getTree()) ) {
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
 		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(hashedUnique.getTree()) ) {
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(hashedUnique) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
 		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Container<MultiIndexData>> p : new CompatibleIterable<Pair<String,Container<MultiIndexData>>>(orderedNonUnique.getTree()) ) {
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());
 		
 	}
 	public void testSafeModify() {
-		Container<MultiIndexData> d = sequence.begin().next().get(); // 5 - 1 - efg
-		assertFalse(mi.safeModify(d, new MultiIndexData(0,4l,"abc"))); // Unique = 7
-		assertFalse(mi.safeModify(d, new MultiIndexData(1,7l,"abc"))); // Unique = 8
-		assertTrue(mi.safeModify(d, new MultiIndexData(0,7l,"abc")));  // Unique = 9
-		assertTrue(mi.safeModify(d, new MultiIndexData(5,7l,"abc")));  // Unique = 10
-		assertTrue(mi.safeModify(d, new MultiIndexData(5,1l,"efg")));  // Unique = 11
+		Record<MultiIndexData> d = sequence.begin().next().get(); // 5 - 1 - efg
+		assertFalse(mi.modify(d, new MultiIndexData(0,4l,"abc"))); // Unique = 7
+		assertFalse(mi.modify(d, new MultiIndexData(1,7l,"abc"))); // Unique = 8
+		assertTrue(mi.modify(d, new MultiIndexData(0,7l,"abc")));  // Unique = 9
+		assertTrue(mi.modify(d, new MultiIndexData(5,7l,"abc")));  // Unique = 10
+		assertTrue(mi.modify(d, new MultiIndexData(5,1l,"efg")));  // Unique = 11
 
 		uniqueSequenceOrder.set(1,11);
 		uniqueIdentityOrder.set(4,11);
@@ -193,31 +193,31 @@ public class MultiIndexTest extends TestCase {
 		uniqueOrderedNonUniqueOrder.set(2,11);
 	
 		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
-		for ( Container<MultiIndexData> c : new CompatibleIterable<Container<MultiIndexData>>(sequence.getTree()) ) {
+		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(identity.getTree()) ) {
+		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
 		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(orderedUnique.getTree()) ) {
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
 		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(hashedUnique.getTree()) ) {
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(hashedUnique) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
 		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Container<MultiIndexData>> p : new CompatibleIterable<Pair<String,Container<MultiIndexData>>>(orderedNonUnique.getTree()) ) {
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());
@@ -229,11 +229,11 @@ public class MultiIndexTest extends TestCase {
 //		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4 x
 //		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
 //		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6 x
-		Container<MultiIndexData> d1 = orderedUnique.get(6); // 6 - 2 - abc
+		Record<MultiIndexData> d1 = orderedUnique.get(6); // 6 - 2 - abc
 		mi.remove(d1);
-		Container<MultiIndexData> d2 = orderedUnique.get(1); // 1 - 4 - abc
+		Record<MultiIndexData> d2 = orderedUnique.get(1); // 1 - 4 - abc
 		mi.remove(d2);
-		Container<MultiIndexData> d3 = orderedUnique.get(3); // 3 - 5 - klm
+		Record<MultiIndexData> d3 = orderedUnique.get(3); // 3 - 5 - klm
 		mi.remove(d3);
 
 		uniqueSequenceOrder.remove(5);
@@ -253,31 +253,31 @@ public class MultiIndexTest extends TestCase {
 		uniqueOrderedNonUniqueOrder.remove(0);
 	
 		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
-		for ( Container<MultiIndexData> c : new CompatibleIterable<Container<MultiIndexData>>(sequence.getTree()) ) {
+		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(identity.getTree()) ) {
+		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
 		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(orderedUnique.getTree()) ) {
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
 		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<MultiIndexData,Container<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Container<MultiIndexData>>>(hashedUnique.getTree()) ) {
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(hashedUnique) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
 		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Container<MultiIndexData>> p : new CompatibleIterable<Pair<String,Container<MultiIndexData>>>(orderedNonUnique.getTree()) ) {
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());

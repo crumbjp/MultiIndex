@@ -62,4 +62,11 @@ public interface StdIterator<T> {
 	 * @return true if same position.
 	 */
 	public boolean equals(Object o);
+	/**
+	 * <pre>
+	 * For implementer.
+	 * </pre>
+	 * @return Returns container instance.
+	 */
+	public Object container();
 }

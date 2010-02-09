@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.TreeSet;
 
+import jp.co.rakuten.util.collection.CompatibleIterable;
+import jp.co.rakuten.util.collection.StdSequence;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 
 public class AvlTune {

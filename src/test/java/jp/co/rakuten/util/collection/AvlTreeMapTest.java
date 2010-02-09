@@ -90,13 +90,13 @@ public class AvlTreeMapTest extends TestCase{
 	}	
 	public void testCompatibleIterable(){
 		int i = 0;
-		for ( Pair<Integer,Integer> p : new CompatibleIterable<Pair<Integer,Integer>>(map.getTree())){
+		for ( Pair<Integer,Integer> p : new CompatibleIterable<Pair<Integer,Integer>>(map)){
 			assertEquals(new Integer(i++),p.second);
 		}
 	}
 	public void testCompatibleReverseIterable(){
 		int i = 9;
-		for ( Pair<Integer,Integer> p : new CompatibleReverseIterable<Pair<Integer,Integer>>(map.getTree())){
+		for ( Pair<Integer,Integer> p : new CompatibleReverseIterable<Pair<Integer,Integer>>(map)){
 			assertEquals(new Integer(i--),p.second);
 		}
 	}

@@ -2,9 +2,22 @@ package jp.co.rakuten.util.collection;
 
 import java.util.Iterator;
 
+/**
+ * Convert I/F with reverse from StdSequence to java.lang.Iterator.
+ * 
+ *	
+ * @author hiroaki.kubota@mail.rakuten.co.jp
+ *
+ * @see CompatibleReverseIterable
+ * @param <T> Target data-type. 
+ */
 public class CompatibleReverseIterator<T> implements Iterator<T> {
 	private StdIterator<T> it;
 	private boolean hasNext;
+	/**
+	 * Instantiate with iterator.
+	 * @param it target iterator
+	 */
 	public CompatibleReverseIterator(StdIterator<T> it) {
 		this.it = it;
 		this.hasNext = true;
