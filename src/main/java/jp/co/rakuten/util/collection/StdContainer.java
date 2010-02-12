@@ -1,7 +1,7 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Basic interface of associative container.
+ * Basic interface of container.
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
  * @param <T> Target data-type. 

@@ -6,27 +6,31 @@ import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.FindComparator;
 
 /**
- * Multi indexable container.
+ * <h3>Multi indexable container.</h3>
  * <pre>
- *   Can select indexes from following.
+ *   <h3>Can select indexes from following</h3>
  *      - {@link SequenceIndex}          : by insertion
  *      - {@link IdentityIndex}          : by data-type identity
  *      - {@link OrderedUniqueIndex}     : by unique field
  *      - {@link OrderedNonUniqueIndex}  : by none unique field
- *      
+ *    
+ *   Reference above, how to access to data.
+ *   <h3>About updating</h3>  
  *   Be careful when update associating data,
- *   because it's necessary to update all indexes.
- *   So necessary to use modify() or rawModify() function absolutely.
+ *   because it need to update all indexes.
+ *   So need to use modify() or rawModify() function absolutely.
  *      (There is a possibility to be going to improve in the future.)
- *      
- * == For Example ==
+ * <h3>Definition</h3> {@code
  *  // Target data-type
- *  class MyData {
+ *  class MyData implements Comparable<MyData>{
  *      Integer i1;
  *      Integer i2;
  *      String  s1;
  *      public MyData(Integer i1,Integer i2,String s1){
- *         this.i1 = i1; this.i2 = i2; this.i3 = i3;
+ *         this.i1 = i1; this.i2 = i2; this.s1 = s1;
+ *       }
+ *      public int compareTo(MyData o) {
+ *        return this.i1.compareTo(o.i1);
  *       }
  *   }
  *   
@@ -42,12 +46,13 @@ import jp.co.rakuten.util.collection.avltree.FindComparator;
  *   );
  *   
  *  // Get indexes.
- *  SequenceIndex<MyData> sequenceIndex = (SequenceIndex<MyData>)multiIndex.index(0);
- *  IdentityIndex<MyData> identityIndex = (IdentityIndex<MyData>)multiIndex.index(1);
- *  OrderedUniqueIndex<Integer,MyData>    i1UniqueIndex    = (OrderedUniqueIndex<Integer,MyData>)multiIndex.index(2); 
- *  OrderedNonUniqueIndex<Integer,MyData> i2NonUniqueIndex = (OrderedUniqueIndex<Integer,MyData>)multiIndex.index(3); 
- *  OrderedNonUniqueIndex<String ,MyData> s1NonUniqueIndex = (OrderedUniqueIndex<String,MyData>)multiIndex.index(4);
- *   
+ *  SequenceIndex<MyData>                 sequence   = (SequenceIndex<MyData>)multiIndex.index(0);
+ *  IdentityIndex<MyData>                 identity   = (IdentityIndex<MyData>)multiIndex.index(1);
+ *  OrderedUniqueIndex<Integer,MyData>    unique     = (OrderedUniqueIndex<Integer,MyData>)multiIndex.index(2); 
+ *  OrderedNonUniqueIndex<Integer,MyData> nonUnique1 = (OrderedNonUniqueIndex<Integer,MyData>)multiIndex.index(3); 
+ *  OrderedNonUniqueIndex<String ,MyData> nonUnique2 = (OrderedNonUniqueIndex<String,MyData>)multiIndex.index(4);
+ *  }   
+ * <h3>Insertion</h3> {@code
  *  // Data input.
  *  multiIndex.add(new MyData(1,10,"d1"));    
  *  multiIndex.add(new MyData(2,10,"d2"));    
@@ -58,21 +63,24 @@ import jp.co.rakuten.util.collection.avltree.FindComparator;
  *  multiIndex.add(new MyData(7,30,"d2"));    
  *  multiIndex.add(new MyData(8,30,"d3"));    
  *  multiIndex.add(new MyData(9,30,"d4"));    
- *
- *  // Data find.
+ * }
+ * <h3>Others</h3> {@code
+ *  // Data update.( find & update )
  *  StdIterator<Pair<Integer,Record<MyData>>> it = i1UniqueIndex.find(3);
  *  Record<MyData> r = it.get().second;
- *  MyData d = r.get();
+ *  multiIndex.modify(r,new MyData(10,40,"d1"));
  *  
  *  // Data remove.
  *  multiIndex.remove(r);
- *  
+ *  }
+ * }
  * </pre>
  * @author hiroaki.kubota@mail.rakuten.co.jp
  * @see SequenceIndex
  * @see IdentityIndex
  * @see OrderedUniqueIndex
  * @see OrderedNonUniqueIndex
+ * 
  * @param <T> Target data-type.
  */
 public class MultiIndex <T> {
@@ -120,7 +128,7 @@ public class MultiIndex <T> {
 	 * Get index.
 	 * 
 	 * @param n Number of indexes order.
-	 * @return
+	 * @return Index object.
 	 */
 	public Index<T> index(final int n){
 		return indexBy.getIndex(n);

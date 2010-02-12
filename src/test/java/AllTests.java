@@ -1,6 +1,7 @@
 import jp.co.rakuten.util.collection.AvlTreeMapTest;
 import jp.co.rakuten.util.collection.AvlTreeMultiMapTest;
 import jp.co.rakuten.util.collection.AvlTreeMultiSetTest;
+import jp.co.rakuten.util.collection.AvlTreeMultiStringTest;
 import jp.co.rakuten.util.collection.AvlTreeSetTest;
 import jp.co.rakuten.util.collection.avltree.AvlTreeParformanceTest;
 import jp.co.rakuten.util.collection.avltree.AvlTreeTest;
@@ -23,6 +24,7 @@ public class AllTests {
 		suite.addTestSuite(AvlTreeMapTest.class);
 		suite.addTestSuite(AvlTreeMultiSetTest.class);
 		suite.addTestSuite(AvlTreeMultiMapTest.class);
+//		suite.addTestSuite(AvlTreeMultiStringTest.class);
 		//$JUnit-END$
 		return suite;
 	}

@@ -17,16 +17,31 @@ import java.util.Iterator;
  * @param <T> Target data-type. 
  */
 public class CompatibleReverseIterable<T> implements Iterable<T> {
-	private StdSequence<T> sequence;
+	final private CompatibleIterator<T> it;
 	/**
 	 * Instantiate with container.
 	 * @param sequence target container
 	 */
 	public CompatibleReverseIterable(StdSequence<T> sequence) {
-		this.sequence = sequence;
+		it = new CompatibleIterator<T>(sequence.last(),sequence.end());
+	}
+	/**
+	 * Instantiate with iterator.
+	 * @param pair Iterator pair (from,to)
+	 */
+	public CompatibleReverseIterable(Pair<StdIterator<T>,StdIterator<T>> pair ) {
+		it = new CompatibleIterator<T>(pair.first,pair.second);
+	}
+	/**
+	 * Instantiate with iterator.
+	 * @param first  Iterator (from).
+	 * @param second Iterator (to).
+	 */
+	public CompatibleReverseIterable(StdIterator<T> first,StdIterator<T> second) {
+		it = new CompatibleIterator<T>(first,second);
 	}
 	@Override
 	public Iterator<T> iterator() {
-		return new CompatibleReverseIterator<T>(sequence.last());
+		return it;
 	}
 }

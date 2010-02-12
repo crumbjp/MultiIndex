@@ -1,6 +1,5 @@
 package jp.co.rakuten.util.collection;
 
-import jp.co.rakuten.util.collection.avltree.AvlIterator;
 import jp.co.rakuten.util.collection.avltree.AvlTreeMultiMap;
 import junit.framework.TestCase;
 

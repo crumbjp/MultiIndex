@@ -291,6 +291,9 @@ public class AvlTree<T,K> {
 	
 //*
 	public AvlIterator<T,K> find(K k) {
+		return find(k,findComparator);
+	}
+	public AvlIterator<T,K> find(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return itend;
 		}
@@ -314,6 +317,9 @@ public class AvlTree<T,K> {
 	}
 
 	public AvlIterator<T,K> findFirst(K k) {
+		return findFirst(k,findComparator);
+	}
+	public AvlIterator<T,K> findFirst(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return itend;
 		}
@@ -346,6 +352,9 @@ public class AvlTree<T,K> {
 	}
 
 	public AvlIterator<T,K> findLast(K k) {
+		return findLast(k,findComparator);
+	}
+	public AvlIterator<T,K> findLast(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return itend;
 		}
@@ -378,6 +387,9 @@ public class AvlTree<T,K> {
 	}
 
 	public Pair<AvlIterator<T,K>,AvlIterator<T,K>> equalRange(K k) {
+		return equalRange(k,findComparator);
+	}
+	public Pair<AvlIterator<T,K>,AvlIterator<T,K>> equalRange(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return new Pair<AvlIterator<T,K>, AvlIterator<T,K>>(itend, itend);
 		}
@@ -436,6 +448,9 @@ public class AvlTree<T,K> {
 				new AvlIterator<T,K>(this,secondNode));
 	}
 	public AvlIterator<T,K> upperBound(K k) {
+		return upperBound(k, findComparator);
+	}
+	public AvlIterator<T,K> upperBound(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return itend;
 		}
@@ -468,6 +483,9 @@ public class AvlTree<T,K> {
 	}
 
 	public AvlIterator<T,K> lowerBound(K k) {
+		return lowerBound(k, findComparator);
+	}
+	public AvlIterator<T,K> lowerBound(K k,FindComparator<T, K> findComparator) {
 		if ( avl == null ) {
 			return itend;
 		}

@@ -64,11 +64,47 @@ public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 		return new ConstStdIterator<Pair<K,V>>(avlTree.last());
 	}
 	@Override
-	public StdIterator<Pair<K,V>> end() {
-		return avlTree.end();
+	public ConstStdIterator<Pair<K,V>> end() {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.end());
+	}
+	@Override
+	public boolean replace(StdIterator<Pair<K, V>> it, Pair<K, V> t) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
+	}
+	@Override
+	public boolean replace(StdIterator<Pair<K,V>> it, V v) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
 	public void erase(StdIterator<Pair<K, V>> it) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
+	}
+	@Override
+	public Pair<StdIterator<Pair<K, V>>, StdIterator<Pair<K, V>>> equlRangeStartWith(
+			K k, FindComparator<Pair<K, V>, K> startWithComparator) {
+		Pair<AvlIterator<Pair<K,V>,K>,AvlIterator<Pair<K,V>,K>> p = avlTree.equalRange(k,startWithComparator);
+		return new Pair<StdIterator<Pair<K,V>>,StdIterator<Pair<K,V>>>(
+				new ConstStdIterator<Pair<K,V>>(p.first),
+				new ConstStdIterator<Pair<K,V>>(p.second));
+	}
+	@Override
+	public ConstStdIterator<Pair<K, V>> findFirstStartWith(K k,
+			FindComparator<Pair<K, V>, K> startWithComparator) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.findFirst(k,startWithComparator));
+	}
+	@Override
+	public ConstStdIterator<Pair<K, V>> findLastStartWith(K k,
+			FindComparator<Pair<K, V>, K> startWithComparator) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.findLast(k,startWithComparator));
+	}
+	@Override
+	public ConstStdIterator<Pair<K, V>> lowerBoundStartWith(K k,
+			FindComparator<Pair<K, V>, K> startWithComparator) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.lowerBound(k,startWithComparator));
+	}
+	@Override
+	public ConstStdIterator<Pair<K, V>> upperBoundStartWith(K k,
+			FindComparator<Pair<K, V>, K> startWithComparator) {
+		return new ConstStdIterator<Pair<K,V>>(avlTree.upperBound(k,startWithComparator));
 	}
 }

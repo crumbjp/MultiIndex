@@ -3,33 +3,11 @@ package jp.co.rakuten.util.collection.avltree;
 import java.util.Comparator;
 
 import jp.co.rakuten.util.collection.Pair;
-import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMap;
 
-public class AvlTreeMap<K,V> implements StdMap<K,V>{
-	private AvlTree<Pair<K,V>,K> avlTree = null;
-	public AvlTree<Pair<K,V>,K> getTree() {
-		return avlTree;
-	}
-	public AvlTreeMap( final AvlTree<Pair<K,V>,K> avlTree ) {
-		this.avlTree = avlTree;
-	}
-	public AvlTreeMap( final Comparator<K> comparator) {
-		avlTree = new AvlTree<Pair<K,V>,K>( 
-				new Comparator<Pair<K,V>>() {
-					public int compare(Pair<K,V> o1, Pair<K,V> o2) {
-						return comparator.compare(o1.first, o2.first);
-					}
-				},
-				new FindComparator<Pair<K,V>, K>() {
-					public int compare(Pair<K,V> o1, K o2) {
-						return comparator.compare(o1.first, o2);
-					}
-				}
-		);
-	}
+public class AvlTreeMap<K,V> extends AvlTreeAdapter<Pair<K,V>,K> implements StdMap<K,V>{
 	public AvlTreeMap() {
-		avlTree = new AvlTree<Pair<K,V>,K>( 
+		super(new AvlTree<Pair<K,V>,K>( 
 				new Comparator<Pair<K,V>>() {
 					public int compare(Pair<K,V> o1, Pair<K,V> o2) {
 						return ((Comparable<K>)o1.first).compareTo(o2.first);
@@ -40,15 +18,24 @@ public class AvlTreeMap<K,V> implements StdMap<K,V>{
 						return ((Comparable<K>)o1.first).compareTo(o2);
 					}
 				}
-		);
+		));
 	}
-	@Override
-	public void clear() {
-		avlTree.clear();
+	public AvlTreeMap( final AvlTree<Pair<K,V>,K> avlTree ) {
+		super(avlTree);
 	}
-	@Override
-	public long size(){
-		return avlTree.size();
+	public AvlTreeMap( final Comparator<K> comparator) {
+		super(new AvlTree<Pair<K,V>,K>( 
+				new Comparator<Pair<K,V>>() {
+					public int compare(Pair<K,V> o1, Pair<K,V> o2) {
+						return comparator.compare(o1.first, o2.first);
+					}
+				},
+				new FindComparator<Pair<K,V>, K>() {
+					public int compare(Pair<K,V> o1, K o2) {
+						return comparator.compare(o1.first, o2);
+					}
+				}
+		));
 	}
 	@Override
 	public boolean insert(Pair<K,V> t) {
@@ -67,38 +54,10 @@ public class AvlTreeMap<K,V> implements StdMap<K,V>{
 		return avlTree.insertReplace(new Pair<K,V>(k,v));
 	}
 	@Override
-	public AvlIterator<Pair<K,V>,K> find(K k) {
-		return avlTree.find(k);
-	}
-	@Override
 	public V get(K k) {
 		AvlIterator<Pair<K,V>,K> it = avlTree.find(k);
 		if ( it.isEnd() ) 
 			return null;
 		return it.get().second;
-	}
-	@Override
-	public AvlIterator<Pair<K,V>,K> lowerBound(K k) {
-		return avlTree.lowerBound(k);
-	}
-	@Override
-	public AvlIterator<Pair<K,V>,K> upperBound(K k) {
-		return avlTree.upperBound(k);
-	}
-	@Override
-	public AvlIterator<Pair<K,V>,K> begin() {
-		return avlTree.begin();
-	}
-	@Override
-	public AvlIterator<Pair<K,V>,K> last() {
-		return avlTree.last();
-	}
-	@Override
-	public AvlIterator<Pair<K,V>,K> end() {
-		return avlTree.end();
-	}
-	@Override
-	public void erase(StdIterator<Pair<K,V>> it) {
-		avlTree.erase((AvlIterator<Pair<K,V>,K>)it);
 	}
 }

@@ -4,8 +4,6 @@ import jp.co.rakuten.util.collection.avltree.AvlIterator;
 import jp.co.rakuten.util.collection.avltree.AvlTreeMultiSet;
 import junit.framework.TestCase;
 
-
-
 public class AvlTreeMultiSetTest extends TestCase{
 	AvlTreeMultiSet<Integer> multiSet = new AvlTreeMultiSet<Integer>();
 
@@ -85,16 +83,28 @@ public class AvlTreeMultiSetTest extends TestCase{
 			assertEquals(new Integer((i--)/2),it.get());
 		}
 	}	
-	public void testCompatibleIterable(){
+	public void testCompatibleIterable1(){
 		int i = 0;
 		for ( Integer v : new CompatibleIterable<Integer>(multiSet)){
 			assertEquals(new Integer((i++)/2),v);
 		}
 	}
-	public void testCompatibleReverseIterable(){
+	public void testCompatibleIterable2(){
+		Pair<StdIterator<Integer>,StdIterator<Integer>> p = multiSet.equlRange(3);
+		for ( Integer v : new CompatibleIterable<Integer>(p)){
+			assertEquals(new Integer(3),v);
+		}
+	}
+	public void testCompatibleReverseIterable1(){
 		int i = 19;
 		for ( Integer v : new CompatibleReverseIterable<Integer>(multiSet)){
 			assertEquals(new Integer((i--)/2),v);
+		}
+	}
+	public void testCompatibleReverseIterable2(){
+		Pair<StdIterator<Integer>,StdIterator<Integer>> p = multiSet.equlRange(3);
+		for ( Integer v : new CompatibleReverseIterable<Integer>(p)){
+			assertEquals(new Integer(3),v);
 		}
 	}
 }

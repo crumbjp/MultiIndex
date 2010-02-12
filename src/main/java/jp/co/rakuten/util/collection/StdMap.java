@@ -17,7 +17,7 @@ package jp.co.rakuten.util.collection;
  * @param <K> Key-type.
  * @param <V> Value-type. 
  */
-public interface StdMap<K,V> extends StdContainer<Pair<K,V>>,StdSequence<Pair<K,V>>,StdRandomUnique<Pair<K,V>, K> {
+public interface StdMap<K,V> extends StdSequence<Pair<K,V>>,StdRandom<Pair<K,V>,K>,StdRandomUnique<Pair<K,V>,K>,StdRandomStartWith<Pair<K,V>,K> {
 
 	/**
 	 * <pre>

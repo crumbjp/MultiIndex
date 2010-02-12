@@ -15,7 +15,7 @@ package jp.co.rakuten.util.collection;
  *
  * @param <T> Target data-type. 
  */
-public interface StdMultiSet<T> extends StdContainer<T>,StdSequence<T>,StdRandomMulti<T,T>{
+public interface StdMultiSet<T> extends StdSequence<T>,StdRandom<T,T>,StdRandomMulti<T,T>,StdRandomStartWith<T,T>{
 	/**
 	 * <pre>
 	 * Enter the new data.
