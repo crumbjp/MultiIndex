@@ -1,10 +1,10 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Associative container like std::map of C++ STL.
+ * <h3>Associative container like std::map of C++ STL.</h3>
  *   This class provides basic I/F of associative container.
  * <pre>
- *  Features:
+ * <h3>Features:</h3>
  *   - This container treats pair-data. The data member of first means the key.
  *   - Entered datas are associated by key.
  *   - Cannot enter data overlapping key.

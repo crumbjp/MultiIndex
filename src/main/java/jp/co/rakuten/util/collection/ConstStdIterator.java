@@ -1,9 +1,8 @@
 package jp.co.rakuten.util.collection;
 /**
- * Unmodifiable iterator(Wrapped StdIterator).
+ * <h3>Unmodifiable iterator ( wrapped StdIterator ).</h3>
  *  
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
  * @param <T> Target data-type. 
  */
 public class ConstStdIterator<T> implements StdIterator<T>{

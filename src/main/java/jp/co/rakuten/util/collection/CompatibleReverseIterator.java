@@ -3,11 +3,9 @@ package jp.co.rakuten.util.collection;
 import java.util.Iterator;
 
 /**
- * Convert I/F with reverse from StdSequence to java.lang.Iterator.
- * 
+ * <h3>Convert I/F with reverse from range of StdIterator to java.lang.Iterator.</h3>
  *	
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
  * @see CompatibleReverseIterable
  * @param <T> Target data-type. 
  */
@@ -17,13 +15,18 @@ public class CompatibleReverseIterator<T> implements Iterator<T> {
 	private boolean hasNext;
 	/**
 	 * Instantiate with iterator.
-	 * @param it target iterator
+	 * @param it target from iterator
+	 * @param itend target to iterator
 	 */
 	public CompatibleReverseIterator(StdIterator<T> it,StdIterator<T> itend) {
 		this.it = it;
 		this.itend = itend;
 		this.hasNext = true;
 	}
+	/**
+	 * Instantiate with iterator.
+	 * @param pair iterator from and to
+	 */
 	public CompatibleReverseIterator(Pair<StdIterator<T>,StdIterator<T>> pair) {
 		this.it = pair.first;
 		this.itend = pair.second;

@@ -1,9 +1,8 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Random accessable interface of overlapping key is not allowed.
+ * <h3>Random accessable interface of overlapping key is not allowed.</h3>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
  * @param <T> Target data-type. 
  */
 public interface StdRandomUnique<T,K>{

@@ -1,10 +1,10 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Associative container like std::multiset of C++ STL.
+ * <h3>Associative container like std::multiset of C++ STL.</h3>
  *   This class provides basic I/F of associative container.
  * <pre>
- *  Features:
+ * <h3>Features:</h3>
  *   - Entered datas are associated by identity of itself.
  *   - Can enter data overlapping identity.
  *   - But must distinguish the data in same identity group yourself. 

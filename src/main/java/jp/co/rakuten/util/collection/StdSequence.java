@@ -1,9 +1,10 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Sequence accessable interface of container.
+ * <h3>Sequence accessable interface of container.</h3>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
+ * @see CompatibleIterable
+ * @see CompatibleReverseIterable
  * @param <T> Target data-type. 
  */
 public interface StdSequence<T> extends StdContainer<T>{
@@ -24,11 +25,4 @@ public interface StdSequence<T> extends StdContainer<T>{
 	 * @return Returns iterator of pointing the last data or end of container(when this container is empty).
 	 */
 	public StdIterator<T> last();
-	/**
-	 * <pre>
-	 * Remove data from this container. 
-	 * </pre>
-	 * @param it Iterator of pointing removing data.
-	 */
-	public void erase(StdIterator<T> it);
 }

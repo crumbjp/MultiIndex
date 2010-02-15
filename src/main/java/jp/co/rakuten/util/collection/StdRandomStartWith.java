@@ -1,18 +1,19 @@
 package jp.co.rakuten.util.collection;
 
 import jp.co.rakuten.util.collection.avltree.FindComparator;
+import jp.co.rakuten.util.collection.avltree.StringStartWithComparator;
 
 /**
+ * <h3>Random accessable interface of range search.</h3>
  * <pre>
- * Random accessable interface of range search.
- * 
  * This class provides the way of searching keys more fuzzy by giving different comparator.
  * The specified comparator keep rule following.
  *  - The order must be same or corresponding between origin and depending on the comparator.
  * This means comparing by start-with.
  * </pre>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
+ * @see FindComparator
+ * @see StringStartWithComparator
  * @param <K> Key-type.
  * @param <T> Target-type. 
  */

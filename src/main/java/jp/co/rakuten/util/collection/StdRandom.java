@@ -1,13 +1,11 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Random accessable base interface of container.
+ * <h3>Random accessable base interface of container.</h3>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
  * @param <T> Target data-type. 
  */
 public interface StdRandom<T,K> {
-
 	/**
 	 * <pre>
 	 * Find lowest data of upper than specifying in this container.

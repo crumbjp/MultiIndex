@@ -2,10 +2,10 @@ package jp.co.rakuten.util.collection;
 
 
 /**
- * Associative container like std::multimap of C++ STL.
+ * <h3>Associative container like std::multimap of C++ STL.</h3>
  *   This class provides basic I/F of associative container.
  * <pre>
- *  Features:
+ * <h3>Features:</h3>
  *   - This container treats pair-data. The data member of first means the key.
  *   - Entered datas are associated by key.
  *   - Can enter data overlapping key.
@@ -20,7 +20,6 @@ package jp.co.rakuten.util.collection;
  * @param <V> Value-type. 
  */
 public interface StdMultiMap<K,V> extends StdSequence<Pair<K,V>>,StdRandom<Pair<K,V>,K>,StdRandomMulti<Pair<K,V>,K>,StdRandomStartWith<Pair<K,V>,K> {
-
 	/**
 	 * <pre>
 	 * Enter the new data.

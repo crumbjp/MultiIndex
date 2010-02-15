@@ -1,9 +1,8 @@
 package jp.co.rakuten.util.collection;
 
 /**
- * Basic interface of container.
+ * <h3>Basic interface of container.</h3>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
  * @param <T> Target data-type. 
  */
 public interface StdContainer<T> {
@@ -24,4 +23,11 @@ public interface StdContainer<T> {
 	 * @return Returns end of container.
 	 */
 	public StdIterator<T> end();
+	/**
+	 * <pre>
+	 * Remove data from this container. 
+	 * </pre>
+	 * @param it Iterator of pointing removing data.
+	 */
+	public void erase(StdIterator<T> it);
 }

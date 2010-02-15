@@ -10,7 +10,8 @@ import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeMap;
 import java.util.Comparator;
 
 /**
- * Base class of unique index.
+ * <h3>Base class of unique index.</h3>
+ *     for developer.
  * 
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *

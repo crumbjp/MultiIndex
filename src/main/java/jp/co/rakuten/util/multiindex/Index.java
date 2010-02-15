@@ -3,8 +3,8 @@ package jp.co.rakuten.util.multiindex;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 
 /**
- * Index base I/F of MultiIndex
- * 
+ * <h3>Index base I/F of MultiIndex.</h3>
+ *     for developer. 
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
  * @param <T> Target data-type.

@@ -11,8 +11,8 @@ import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeMultiMap;
 import java.util.Comparator;
 
 /**
- * Base class of non-unique index.
- * 
+ * <h3>Base class of non-unique index.</h3>
+ *     for developer.
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
  * @param <K> Ordering key-type

@@ -1,6 +1,7 @@
 package jp.co.rakuten.util.collection;
 /**
- * How come jdk isn't equipped with basic classes like This?
+ * <h3>The pair container.</h3>
+ *  How come jdk isn't equipped with basic classes like This?
  * @author hiroaki.kubota@mail.rakuten.co.jp
  *
  * @param <FIRST>  The first data-type.

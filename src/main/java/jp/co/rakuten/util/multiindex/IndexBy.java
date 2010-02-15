@@ -5,13 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Indexes definition.
- *    Use to specify kinds of indexing.
- * == For Example ==
+ * <h3>Index container.</h3>
+ *     Use to define some kinds of index for MultiIndex.
+ * {@code
  *   new IndexBy<T>(SequenceIndex<T>(),IndentityIndex<T>());
- * 
+ * }
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
+ * @see MultiIndex
+ * @see SequenceIndex
+ * @see IdentityIndex
+ * @see OrderedUniqueIndex
+ * @see OrderedNonUniqueIndex
  * @param <T> Target data-type.
  */
 public class IndexBy<T> implements Iterable<Index<T>>{

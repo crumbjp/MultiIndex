@@ -1,13 +1,13 @@
 package jp.co.rakuten.util.multiindex;
 /**
- * MultiIndex's record.
+ * <h3>MultiIndex's record.</h3>
  * <pre>
  *    This class is wrapper of user specifying data-type.
- *    MultiIndex container distinguish the record by this object user operating.
+ *    {@link MultiIndex} container distinguish the record by this object user operating.
  *    So user must operate the data through this.
  * </pre>
  * @author hiroaki.kubota@mail.rakuten.co.jp
- *
+ * @see MultiIndex 
  * @param <T> Target data-type.
  */
 public class Record <T> {
