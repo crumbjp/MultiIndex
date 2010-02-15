@@ -1,3 +1,4 @@
+
 package jp.co.rakuten.util.multiindex;
 /**
  * <h3>MultiIndex's record.</h3>
@@ -10,23 +11,17 @@ package jp.co.rakuten.util.multiindex;
  * @see MultiIndex 
  * @param <T> Target data-type.
  */
+/*
 public class Record <T> {
 	private static Integer currentUniqueId = 0;
 	final Integer id;
 	T        t;
-	/**
-	 * For developer
-	 * @param t data.
-	 */
 	public Record(final T t) {
 		this.id = ++currentUniqueId;
 		this.t  = t;
 	}
-	/**
-	 * Get data.
-	 * @return Returns user data.
-	 */
 	public T get(){
 		return t;
 	}
 }
+*/

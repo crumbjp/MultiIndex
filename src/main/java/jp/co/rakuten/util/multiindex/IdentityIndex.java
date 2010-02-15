@@ -37,7 +37,7 @@ import jp.co.rakuten.util.collection.StdMap;
  * @see CompatibleReverseIterable
  * @param <T> Target data-type.
  */
-public class IdentityIndex <T extends Comparable<T>> extends UniqueIndex<T,T> implements StdMap<T,Record<T>>{
+public class IdentityIndex <T extends Comparable<T>> extends UniqueIndex<T,T> {
 	/**
 	 * Constructor.
 	 */

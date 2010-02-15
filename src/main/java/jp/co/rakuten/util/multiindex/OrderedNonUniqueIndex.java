@@ -37,7 +37,7 @@ import jp.co.rakuten.util.collection.StdMultiMap;
  * @see CompatibleReverseIterable
  * @param <T> Target data-type.
  */
-public class OrderedNonUniqueIndex <K extends Comparable<K>,T>	extends NonUniqueIndex<K,T>	implements StdMultiMap<K,Record<T>>{
+public class OrderedNonUniqueIndex <K extends Comparable<K>,T>	extends NonUniqueIndex<K,T>	{
 	private Field field;
 	/**
 	 * Initializes with field of T.

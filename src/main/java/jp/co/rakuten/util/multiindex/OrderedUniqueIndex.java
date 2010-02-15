@@ -45,7 +45,7 @@ import jp.co.rakuten.util.collection.StdMap;
  * @see CompatibleReverseIterable
  * @param <T> Target data-type.
  */
-public class OrderedUniqueIndex <K extends Comparable<K>,T> extends UniqueIndex<K,T> implements StdMap<K,Record<T>>{
+public class OrderedUniqueIndex <K extends Comparable<K>,T> extends UniqueIndex<K,T> {
 	private Field field;
 	/**
 	 * Initializes with field of T.

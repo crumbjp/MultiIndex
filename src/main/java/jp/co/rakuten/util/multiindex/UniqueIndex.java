@@ -18,16 +18,16 @@ import java.util.Comparator;
  * @param <K> Ordering key-type
  * @param <T> Target data-type
  */
-public abstract class UniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMap<K, Record<T>> implements Index<T> , StdMap<K,Record<T>> {
-	private AvlTreeMap<K,Record<T>> container = new AvlTreeMap<K, Record<T>>(
-			new AvlTree<Pair<K,Record<T>>, K>(
-					new Comparator<Pair<K,Record<T>>>() {
-						public int compare(Pair<K,Record<T>> o1, Pair<K,Record<T>> o2) {
+public abstract class UniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMap<K, T> implements Index<T> , StdMap<K,T> {
+	private AvlTreeMap<K,T> container = new AvlTreeMap<K, T>(
+			new AvlTree<Pair<K,T>, K>(
+					new Comparator<Pair<K,T>>() {
+						public int compare(Pair<K,T> o1, Pair<K,T> o2) {
 							return o1.first.compareTo(o2.first);
 						}
 					},
-					new FindComparator<Pair<K,Record<T>>, K>() {
-						public int compare(Pair<K,Record<T>> o1, K o2) {
+					new FindComparator<Pair<K,T>, K>() {
+						public int compare(Pair<K,T> o1, K o2) {
 							return o1.first.compareTo(o2);
 						}
 					}
@@ -37,7 +37,7 @@ public abstract class UniqueIndex <K extends Comparable<K>,T> extends Unmodifiab
 	public UniqueIndex() {
 	}
 	@Override
-	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
+	public void opInit(final Integer size) {
 		avlTree = container.getTree(); 
 	}
 	@Override
@@ -45,20 +45,20 @@ public abstract class UniqueIndex <K extends Comparable<K>,T> extends Unmodifiab
 		this.avlTree.clear();
 	}
 	@Override
-	public void opAdd(final Record<T> c) {
-		K k = getKey(c.t);
+	public void opAdd(final T c,final Integer u) {
+		K k = getKey(c);
 		if ( ! container.insert(k,c) ) 
 			throw new RuntimeException("ADD : Identity is specified conflicting key !");
 	}
 	@Override
-	public void opRemove(final Record<T> c) {
-		K k = getKey(c.t);
+	public void opRemove(final T c,final Integer u) {
+		K k = getKey(c);
 		container.find(k).erase();
 	}
 	@Override
-	public void opModify(final Record<T> c, final T t) {
+	public void opModify(final T c,final Integer u,final T t) {
 		K newKey = getKey(t);
-		K oldKey = getKey(c.t);
+		K oldKey = getKey(c);
 		if (! oldKey.equals(newKey) ) {
 			container.find(oldKey).erase();
 			if ( ! container.insert(newKey,c) ) 
@@ -71,9 +71,9 @@ public abstract class UniqueIndex <K extends Comparable<K>,T> extends Unmodifiab
 		return container.find(k).isEnd();
 	}
 	@Override
-	public boolean opCheckModify(final Record<T> c, final T t) {
+	public boolean opCheckModify(final T c,final Integer u,final T t) {
 		K newKey = getKey(t);
-		K oldKey = getKey(c.t);
+		K oldKey = getKey(c);
 		if (! oldKey.equals(newKey) ) {
 			return container.find(newKey).isEnd();
 		}

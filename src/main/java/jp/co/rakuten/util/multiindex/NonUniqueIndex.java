@@ -18,16 +18,16 @@ import java.util.Comparator;
  * @param <K> Ordering key-type
  * @param <T> Target data-type
  */
-public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, Record<T>> implements Index<T> , StdMultiMap<K,Record<T>> {
-	private AvlTreeMultiMap<K,Record<T>> container = new AvlTreeMultiMap<K, Record<T>>(
-			new AvlTree<Pair<K,Record<T>>, K>(
-					new Comparator<Pair<K,Record<T>>>() {
-						public int compare(Pair<K,Record<T>> o1, Pair<K,Record<T>> o2) {
+public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, T> implements Index<T> , StdMultiMap<K,T> {
+	private AvlTreeMultiMap<K,T> container = new AvlTreeMultiMap<K, T>(
+			new AvlTree<Pair<K,T>, K>(
+					new Comparator<Pair<K,T>>() {
+						public int compare(Pair<K,T> o1, Pair<K,T> o2) {
 							return o1.first.compareTo(o2.first);
 						}
 					},
-					new FindComparator<Pair<K,Record<T>>, K>() {
-						public int compare(Pair<K,Record<T>> o1, K o2) {
+					new FindComparator<Pair<K,T>, K>() {
+						public int compare(Pair<K,T> o1, K o2) {
 							return o1.first.compareTo(o2);
 						}
 					}
@@ -37,7 +37,7 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 	public NonUniqueIndex() {
 	}
 	@Override
-	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
+	public void opInit(final Integer size) {
 		avlTree = container.getTree(); 
 	}
 	@Override
@@ -45,37 +45,37 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 		avlTree.clear();
 	}
 	@Override
-	public void opAdd(final Record<T> c) {
-		K k = getKey(c.t);
+	public void opAdd(final T c,final Integer u) {
+		K k = getKey(c);
 		container.insert(k,c); 
 	}
 	@Override
-	public void opRemove(final Record<T> c) {
-		K k = getKey(c.t);
-		Pair<StdIterator<Pair<K,Record<T>>>,StdIterator<Pair<K,Record<T>>>> pair = container.equlRange(k);
-		for (	StdIterator<Pair<K,Record<T>>> it = pair.first,
+	public void opRemove(final T c,final Integer u) {
+		K k = getKey(c);
+		Pair<StdIterator<Pair<K,T>>,StdIterator<Pair<K,T>>> pair = container.equlRange(k);
+		for (	StdIterator<Pair<K,T>> it = pair.first,
 				itend = pair.second;
 			!it.equals(itend);
 			it.next())
 		{
-			if ( it.get().second.id == c.id ) {
+			if ( it.get().second== c) {
 				it.erase();
 				break;
 			}
 		}
 	}
 	@Override
-	public void opModify(final Record<T> c, final T t) {
+	public void opModify(final T c,final Integer u,final T t) {
 		K newKey = getKey(t);
-		K oldKey = getKey(c.t);
+		K oldKey = getKey(c);
 		if (! oldKey.equals(newKey) ) {
-			Pair<StdIterator<Pair<K,Record<T>>>,StdIterator<Pair<K,Record<T>>>> pair = container.equlRange(oldKey);
-			for (	StdIterator<Pair<K,Record<T>>> it = pair.first,
+			Pair<StdIterator<Pair<K,T>>,StdIterator<Pair<K,T>>> pair = container.equlRange(oldKey);
+			for (	StdIterator<Pair<K,T>> it = pair.first,
 					itend = pair.second;
 				!it.equals(itend);
 				it.next())
 			{
-				if ( it.get().second.id == c.id ) {
+				if ( it.get().second== c) {
 					it.erase();
 					break;
 				}
@@ -88,7 +88,7 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 		return true;
 	}
 	@Override
-	public boolean opCheckModify(final Record<T> c, final T t) {
+	public boolean opCheckModify(final T c,final Integer u,final T t) {
 		return true;
 	}
 }

@@ -2,6 +2,7 @@ package jp.co.rakuten.util.multiindex;
 
 import java.util.Comparator;
 
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.FindComparator;
 
@@ -84,18 +85,19 @@ import jp.co.rakuten.util.collection.avltree.FindComparator;
  * @param <T> Target data-type.
  */
 public class MultiIndex <T> {
+	private static Integer currentUniqueId = 0;
 	private final IndexBy<T> indexBy;
-	private final AvlTree<Record<T>,Record<T>> dataContainer = new AvlTree<Record<T>,Record<T>>(
-			new Comparator<Record<T>>() {
+	private final AvlTree<Pair<T,Integer>,T> dataContainer = new AvlTree<Pair<T,Integer>,T>(
+			new Comparator<Pair<T,Integer>>() {
 				@Override
-				public int compare(Record<T> o1, Record<T> o2) {
-					return o1.id.compareTo(o2.id);
+				public int compare(Pair<T,Integer> o1, Pair<T,Integer> o2) {
+					return o1.first.hashCode() - o2.first.hashCode();
 				}
 			},
-			new FindComparator<Record<T>,Record<T>> () {
+			new FindComparator<Pair<T,Integer>,T> () {
 				@Override
-				public int compare(Record<T> o1, Record<T> o2) {
-					return o1.id.compareTo(o2.id);
+				public int compare(Pair<T,Integer> o1, T o2) {
+					return o1.first.hashCode() - o2.hashCode();
 				}
 			}
 	);
@@ -110,7 +112,7 @@ public class MultiIndex <T> {
 		this.size = DEFAULT_SIZE;
 		this.indexBy = indexBy;
 		for ( Index<T> index : indexBy )
-			index.opInit(this.dataContainer,this.size);
+			index.opInit(this.size);
 	}
 	/**
 	 * Instantiate with indexes. (T.B.D)
@@ -122,7 +124,7 @@ public class MultiIndex <T> {
 		this.size = size;
 		this.indexBy = indexBy;
 		for ( Index<T> index : indexBy )
-			index.opInit(this.dataContainer,this.size);
+			index.opInit(this.size);
 	}
 	/**
 	 * Get index.
@@ -142,10 +144,9 @@ public class MultiIndex <T> {
 	 */
 	@Deprecated
 	public void rawAdd(final T t) {
-		Record<T> c = new Record<T>(t);
 		for ( Index<T> index : indexBy )
-			index.opAdd(c);
-		this.dataContainer.insert(c);
+			index.opAdd(t);
+		this.dataContainer.insert(new Pair<T,Integer>(t,++currentUniqueId));
 	}
 	/**
 	 * <pre>
@@ -166,7 +167,7 @@ public class MultiIndex <T> {
 	 * 
 	 * @param c Target data.
 	 */
-	public void remove(final Record<T> c){
+	public void remove(final T c){
 		for ( Index<T> index : indexBy ) 
 			index.opRemove(c);
 		this.dataContainer.erase(this.dataContainer.find(c));
@@ -180,10 +181,10 @@ public class MultiIndex <T> {
 	 * @param t New data.
 	 */
 	@Deprecated
-	public void rawModify(final Record<T> c , final T t) {
+	public void rawModify(final T c , final T t) {
 		for ( Index<T> index : indexBy ) 
 			index.opModify(c,t);
-		c.t = t;
+		this.dataContainer.find(c).get().first = t;
 	}
 	/**
 	 * <pre>
@@ -193,7 +194,7 @@ public class MultiIndex <T> {
 	 * @param t New data.
 	 * @return true if success.
 	 */
-	public boolean modify(final Record<T> c , final T t) {
+	public boolean modify(final T c , final T t) {
 		for ( Index<T> index : indexBy )
 			if ( ! index.opCheckModify(c, t) )
 				return false;

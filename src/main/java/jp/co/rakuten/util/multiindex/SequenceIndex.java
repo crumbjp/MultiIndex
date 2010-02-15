@@ -1,10 +1,16 @@
 package jp.co.rakuten.util.multiindex;
 
+import java.util.Comparator;
+
 import jp.co.rakuten.util.collection.CompatibleIterable;
 import jp.co.rakuten.util.collection.CompatibleReverseIterable;
+import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
-import jp.co.rakuten.util.collection.StdSet;
+import jp.co.rakuten.util.collection.StdMap;
+import jp.co.rakuten.util.collection.StdSequence;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
+import jp.co.rakuten.util.collection.avltree.AvlTreeMap;
+import jp.co.rakuten.util.collection.avltree.FindComparator;
 import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeSet;
 /**
  * <h3>The index is sorted in order of insertion.</h3>
@@ -36,7 +42,21 @@ import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeSet;
  * @see CompatibleReverseIterable
  * @param <T> Target data-type.
  */
-public class SequenceIndex<T> extends UnmodifiableAvlTreeSet<Record<T>> implements Index<T> , StdSet<Record<T>> {
+public class SequenceIndex<T> implements Index<T>,StdSequence<T> {
+	private AvlTreeMap<Integer,T> container = new AvlTreeMap<Integer, T>(
+			new AvlTree<Pair<Integer,T>, Integer>(
+					new Comparator<Pair<Integer,T>>() {
+						public int compare(Pair<Integer,T> o1, Pair<Integer,T> o2) {
+							return o1.first.compareTo(o2.first);
+						}
+					},
+					new FindComparator<Pair<Integer,T>, Integer>() {
+						public int compare(Pair<Integer,T> o1, Integer o2) {
+							return o1.first.compareTo(o2);
+						}
+					}
+			)
+	); 
 	/**
 	 * Constructor.
 	 */
@@ -44,31 +64,60 @@ public class SequenceIndex<T> extends UnmodifiableAvlTreeSet<Record<T>> implemen
 		// Nothing to do.
 	}
 	@Override
-	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
-		avlTree = origin;
+	public void opInit(final Integer size) {
 	}
 	@Override
-	public void opClear() {
-		;
+	public void opClear(){
+		container.clear();
 	}
 	@Override
-	public void opAdd(final Record<T> c) {
-		;
+	public void opAdd(final T c,final Integer u) {
+		container.insert(u,c);
 	}
 	@Override
-	public void opRemove(final Record<T> c){
-		;
+	public void opRemove(final T c,final Integer u) {
+		container.find(u).erase();
 	}
 	@Override
-	public void opModify(final Record<T> c, T t) {
-		;
+	public void opModify(final T c,final Integer u,final T t) {
+		container.find(u).get().second = t;
 	}
 	@Override
 	public boolean opCheckAdd(final T t) {
 		return true;
 	}
 	@Override
-	public boolean opCheckModify(final Record<T> c, T t) {
+	public boolean opCheckModify(final T c,final Integer u,final T t) {
 		return true;
 	}
+	@Override
+	public StdIterator<T> begin() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public StdIterator<T> last() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public StdIterator<T> end() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void erase(StdIterator<T> it) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public long size() {
+		return container.size();
+	}
+	
 }

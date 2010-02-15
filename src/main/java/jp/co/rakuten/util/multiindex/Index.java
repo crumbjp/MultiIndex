@@ -16,7 +16,7 @@ public interface Index <T> {
 	 * @param origin MultiIndex's inner container.
 	 * @param size T.B.D
 	 */
-	public void opInit   (final AvlTree<Record<T>,Record<T>> origin,final Integer size);
+	public void opInit   (final Integer size);
 	/**
 	 * Event of add into container.
 	 * <pre> 
@@ -24,8 +24,9 @@ public interface Index <T> {
 	 * </pre>
 	 * 
 	 * @param c Adding data.
+	 * @param u Unique id
 	 */
-	public void opAdd    (final Record<T> c);
+	public void opAdd    (final T c,final Integer u);
 	/**
 	 * Event of remove from container.
 	 * <pre> 
@@ -33,8 +34,9 @@ public interface Index <T> {
 	 * </pre>
 	 * 
 	 * @param c Removing data.
+	 * @param u Unique id
 	 */
-	public void opRemove (final Record<T> c);
+	public void opRemove (final T c,final Integer u);
 	/**
 	 * Event of update in container.
 	 * <pre> 
@@ -42,9 +44,10 @@ public interface Index <T> {
 	 * </pre>
 	 * 
 	 * @param c Targeting data.
+	 * @param u Unique id
 	 * @param t Updating new data.
 	 */
-	public void opModify (final Record<T> c,final T t);
+	public void opModify (final T c,final Integer u,final T t);
 	/**
 	 * Event of all clear.
 	 * <pre> 
@@ -70,8 +73,9 @@ public interface Index <T> {
 	 * </pre>
 	 * 
 	 * @param c Targeting data. 
+	 * @param u Unique id
 	 * @param t Charenging new data. 
 	 * @return True if possible.
 	 */
-	public boolean opCheckModify(final Record<T> c,final T t);
+	public boolean opCheckModify(final T c,final Integer u,final T t);
 }
