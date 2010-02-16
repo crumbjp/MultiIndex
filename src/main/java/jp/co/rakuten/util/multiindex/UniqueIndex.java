@@ -19,26 +19,27 @@ import java.util.Comparator;
  * @param <T> Target data-type
  */
 public abstract class UniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMap<K, T> implements Index<T> , StdMap<K,T> {
-	private AvlTreeMap<K,T> container = new AvlTreeMap<K, T>(
-			new AvlTree<Pair<K,T>, K>(
-					new Comparator<Pair<K,T>>() {
-						public int compare(Pair<K,T> o1, Pair<K,T> o2) {
-							return o1.first.compareTo(o2.first);
-						}
-					},
-					new FindComparator<Pair<K,T>, K>() {
-						public int compare(Pair<K,T> o1, K o2) {
-							return o1.first.compareTo(o2);
-						}
-					}
-			)
-	); 
+	private final AvlTreeMap<K,T> container;
 	protected abstract K getKey(final T t);
 	public UniqueIndex() {
+		super(	new AvlTree<Pair<K,T>, K>(
+						new Comparator<Pair<K,T>>() {
+							public int compare(Pair<K,T> o1, Pair<K,T> o2) {
+								return o1.first.compareTo(o2.first);
+							}
+						},
+						new FindComparator<Pair<K,T>, K>() {
+							public int compare(Pair<K,T> o1, K o2) {
+								return o1.first.compareTo(o2);
+							}
+						}
+				)
+		);
+		container = new AvlTreeMap<K, T>(avlTree);
 	}
 	@Override
 	public void opInit(final Integer size) {
-		avlTree = container.getTree(); 
+
 	}
 	@Override
 	public void opClear(){
@@ -61,7 +62,7 @@ public abstract class UniqueIndex <K extends Comparable<K>,T> extends Unmodifiab
 		K oldKey = getKey(c);
 		if (! oldKey.equals(newKey) ) {
 			container.find(oldKey).erase();
-			if ( ! container.insert(newKey,c) ) 
+			if ( ! container.insert(newKey,t) ) 
 				throw new RuntimeException("MODIFY : Identity is specified conflicting key !");
 		}
 	}

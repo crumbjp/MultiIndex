@@ -6,13 +6,10 @@ import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMap;
 
 public class UnmodifiableAvlTreeMap<K,V> implements StdMap<K,V>{
-	protected AvlTree<Pair<K,V>,K> avlTree = null;
+	protected final AvlTree<Pair<K,V>,K> avlTree;
 	public AvlTree<Pair<K,V>,K> getTree() {
 		return avlTree;
 	}
-	public UnmodifiableAvlTreeMap() {
-	}
-
 	public UnmodifiableAvlTreeMap( final AvlTree<Pair<K,V>,K> avlTree ) {
 		this.avlTree = avlTree;
 	}

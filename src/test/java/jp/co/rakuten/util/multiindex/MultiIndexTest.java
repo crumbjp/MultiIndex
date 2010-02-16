@@ -126,7 +126,7 @@ public class MultiIndexTest extends TestCase {
 		 super.setUp();
 	}
 	public void testGet1(){
-		assertEquals(new Integer(4),identity.get(new MultiIndexData(3,0l,"")).unique);
+		assertEquals(new Integer(4),identity.find(new MultiIndexData(3,0l,"")).get().unique);
 	}
 	public void testGet2(){
 		assertEquals(new Integer(4),orderedUnique1.get(3).unique);
@@ -135,12 +135,6 @@ public class MultiIndexTest extends TestCase {
 		assertEquals(new Integer(4),orderedUnique2.get(5l).unique);
 	}
 	public void testGet4(){
-//		mi.add(new MultiIndexData(6,2l,"abc")); // Unique = 1
-//		mi.add(new MultiIndexData(5,1l,"efg")); // Unique = 2
-//		mi.add(new MultiIndexData(4,3l,"hij")); // Unique = 3
-//		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4
-//		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
-//		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6
 		Pair<StdIterator<Pair<String,MultiIndexData>>,StdIterator<Pair<String,MultiIndexData>>> p = orderedNonUnique.equlRange("abc");
 		assertEquals(new Integer(1),p.first.get().second.unique);
 		p.first.next();
@@ -167,8 +161,8 @@ public class MultiIndexTest extends TestCase {
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,MultiIndexData> p : new CompatibleIterable<Pair<MultiIndexData,MultiIndexData>>(identity) ) {
-			assertEquals(iexp.next(), p.second.unique);
+		for ( MultiIndexData c : new CompatibleIterable<MultiIndexData>(identity) ) {
+			assertEquals(iexp.next(), c.unique);
 		}
 		assertFalse(iexp.hasNext());
 	
@@ -192,12 +186,25 @@ public class MultiIndexTest extends TestCase {
 		
 	}
 	public void testSafeModify() {
+//		mi.add(new MultiIndexData(6,2l,"abc")); // Unique = 1
+//		mi.add(new MultiIndexData(5,1l,"efg")); // Unique = 2
+//		mi.add(new MultiIndexData(4,3l,"hij")); // Unique = 3
+//		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4
+//		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
+//		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6
 		MultiIndexData d = sequence.begin().next().get(); // 5 - 1 - efg
 		assertFalse(mi.modify(d, new MultiIndexData(0,4l,"abc"))); // Unique = 7
 		assertFalse(mi.modify(d, new MultiIndexData(1,7l,"abc"))); // Unique = 8
 		assertTrue(mi.modify(d, new MultiIndexData(0,7l,"abc")));  // Unique = 9
+		d = orderedUnique1.find(0).get().second; // 0 - 7 - abc
+		assertEquals("abc", d.s);
 		assertTrue(mi.modify(d, new MultiIndexData(5,7l,"abc")));  // Unique = 10
+		d = orderedUnique1.find(5).get().second; // 5 - 7 - abc
+		assertEquals("abc", d.s);
 		assertTrue(mi.modify(d, new MultiIndexData(5,1l,"efg")));  // Unique = 11
+		d = orderedUnique1.find(5).get().second; // 5 - 7 - efg
+		assertEquals("efg", d.s);
+		assertEquals(new Long(1), d.l);
 
 		uniqueSequenceOrder.set(1,11);
 		uniqueIdentityOrder.set(4,11);
@@ -212,8 +219,8 @@ public class MultiIndexTest extends TestCase {
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,MultiIndexData> p : new CompatibleIterable<Pair<MultiIndexData,MultiIndexData>>(identity) ) {
-			assertEquals(iexp.next(), p.second.unique);
+		for ( MultiIndexData c : new CompatibleIterable<MultiIndexData>(identity) ) {
+			assertEquals(iexp.next(), c.unique);
 		}
 		assertFalse(iexp.hasNext());
 	
@@ -272,8 +279,8 @@ public class MultiIndexTest extends TestCase {
 		assertFalse(sexp.hasNext());
 		
 		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
-		for ( Pair<MultiIndexData,MultiIndexData> p : new CompatibleIterable<Pair<MultiIndexData,MultiIndexData>>(identity) ) {
-			assertEquals(iexp.next(), p.second.unique);
+		for ( MultiIndexData c : new CompatibleIterable<MultiIndexData>(identity) ) {
+			assertEquals(iexp.next(), c.unique);
 		}
 		assertFalse(iexp.hasNext());
 	
@@ -351,17 +358,16 @@ public class MultiIndexTest extends TestCase {
 		}
 		{
 			IdentityIndex<MyData> identity = (IdentityIndex<MyData>)multiIndex.index(0);
-			for ( Pair<MyData,MyData> p : new CompatibleIterable<Pair<MyData,MyData>>(identity)){
-				MyData r = p.second;
+			for ( MyData r : new CompatibleIterable<MyData>(identity)){
 			}
 		}
 		{
 			IdentityIndex<MyData> identity = (IdentityIndex<MyData>)multiIndex.index(0);
-			for ( StdIterator<Pair<MyData,MyData>> it = identity.begin(),
+			for ( StdIterator<MyData> it = identity.begin(),
 					itend = identity.end();
 			! it.equals(itend);
 			it.next()){
-				MyData r = it.get().second;
+				MyData r = it.get();
 			}
 		}
 		{

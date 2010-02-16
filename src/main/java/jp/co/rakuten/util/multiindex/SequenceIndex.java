@@ -8,6 +8,7 @@ import jp.co.rakuten.util.collection.Pair;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMap;
 import jp.co.rakuten.util.collection.StdSequence;
+import jp.co.rakuten.util.collection.avltree.AvlIterator;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.AvlTreeMap;
 import jp.co.rakuten.util.collection.avltree.FindComparator;
@@ -92,32 +93,27 @@ public class SequenceIndex<T> implements Index<T>,StdSequence<T> {
 	}
 	@Override
 	public StdIterator<T> begin() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AvlValueIterator<T,Integer>(container.begin());
 	}
 	@Override
 	public StdIterator<T> last() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AvlValueIterator<T,Integer>(container.last());
 	}
+	private AvlValueIterator<T,Integer> itend = new AvlValueIterator<T,Integer>(container.end()); 
 	@Override
 	public StdIterator<T> end() {
-		// TODO Auto-generated method stub
-		return null;
+		return itend; 
 	}
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		container.clear();
 	}
 	@Override
 	public void erase(StdIterator<T> it) {
-		// TODO Auto-generated method stub
-		
+		it.erase();
 	}
 	@Override
 	public long size() {
 		return container.size();
 	}
-	
 }

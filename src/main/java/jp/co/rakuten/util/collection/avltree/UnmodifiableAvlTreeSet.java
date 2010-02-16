@@ -6,12 +6,10 @@ import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdSet;
 
 public class UnmodifiableAvlTreeSet<T> implements StdSet<T>{
-	protected AvlTree<T,T> avlTree = null;
+	protected final AvlTree<T,T> avlTree;
 	public AvlTree<T,T> getTree() {
 		return avlTree;
 	}
-	public UnmodifiableAvlTreeSet() {
-	}	
 	public UnmodifiableAvlTreeSet( final AvlTree<T,T> avlTree ) {
 		this.avlTree = avlTree;
 	}

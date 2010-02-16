@@ -19,8 +19,11 @@ import java.util.Comparator;
  * @param <T> Target data-type
  */
 public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends UnmodifiableAvlTreeMultiMap<K, T> implements Index<T> , StdMultiMap<K,T> {
-	private AvlTreeMultiMap<K,T> container = new AvlTreeMultiMap<K, T>(
-			new AvlTree<Pair<K,T>, K>(
+	private AvlTreeMultiMap<K,T> container;
+
+	protected abstract K getKey(final T t);
+	public NonUniqueIndex() {
+		super(	new AvlTree<Pair<K,T>, K>(
 					new Comparator<Pair<K,T>>() {
 						public int compare(Pair<K,T> o1, Pair<K,T> o2) {
 							return o1.first.compareTo(o2.first);
@@ -31,14 +34,12 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 							return o1.first.compareTo(o2);
 						}
 					}
-			)
-	); 
-	protected abstract K getKey(final T t);
-	public NonUniqueIndex() {
+				)
+		);
+		container = new AvlTreeMultiMap<K, T>(avlTree);
 	}
 	@Override
 	public void opInit(final Integer size) {
-		avlTree = container.getTree(); 
 	}
 	@Override
 	public void opClear(){

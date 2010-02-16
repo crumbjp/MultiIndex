@@ -6,11 +6,9 @@ import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdMultiMap;
 
 public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
-	protected AvlTree<Pair<K,V>,K> avlTree = null;
+	protected final AvlTree<Pair<K,V>,K> avlTree;
 	public AvlTree<Pair<K,V>,K> getTree() {
 		return avlTree;
-	}
-	public UnmodifiableAvlTreeMultiMap() {
 	}
 	public UnmodifiableAvlTreeMultiMap( final AvlTree<Pair<K,V>,K> avlTree ) {
 		this.avlTree = avlTree;

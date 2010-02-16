@@ -3,6 +3,7 @@ package jp.co.rakuten.util.multiindex;
 import java.util.Comparator;
 
 import jp.co.rakuten.util.collection.Pair;
+import jp.co.rakuten.util.collection.avltree.AvlIterator;
 import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.FindComparator;
 
@@ -144,9 +145,10 @@ public class MultiIndex <T> {
 	 */
 	@Deprecated
 	public void rawAdd(final T t) {
+		++currentUniqueId;
 		for ( Index<T> index : indexBy )
-			index.opAdd(t);
-		this.dataContainer.insert(new Pair<T,Integer>(t,++currentUniqueId));
+			index.opAdd(t,currentUniqueId);
+		this.dataContainer.insert(new Pair<T,Integer>(t,currentUniqueId));
 	}
 	/**
 	 * <pre>
@@ -168,9 +170,13 @@ public class MultiIndex <T> {
 	 * @param c Target data.
 	 */
 	public void remove(final T c){
+		AvlIterator<Pair<T,Integer>,T> it = this.dataContainer.find(c);
+		if ( it.isEnd() ) {
+			return;
+		}
 		for ( Index<T> index : indexBy ) 
-			index.opRemove(c);
-		this.dataContainer.erase(this.dataContainer.find(c));
+			index.opRemove(c,it.get().second);
+		this.dataContainer.erase(it);
 	}
 	/**
 	 * <pre>
@@ -182,9 +188,10 @@ public class MultiIndex <T> {
 	 */
 	@Deprecated
 	public void rawModify(final T c , final T t) {
+		AvlIterator<Pair<T,Integer>,T> it = this.dataContainer.find(c);
 		for ( Index<T> index : indexBy ) 
-			index.opModify(c,t);
-		this.dataContainer.find(c).get().first = t;
+			index.opModify(c,it.get().second,t);
+		it.get().first = t;
 	}
 	/**
 	 * <pre>
@@ -195,8 +202,12 @@ public class MultiIndex <T> {
 	 * @return true if success.
 	 */
 	public boolean modify(final T c , final T t) {
+		AvlIterator<Pair<T,Integer>,T> it = this.dataContainer.find(c);
+		if ( it.isEnd() ) {
+			return false;
+		}
 		for ( Index<T> index : indexBy )
-			if ( ! index.opCheckModify(c, t) )
+			if ( ! index.opCheckModify(c,it.get().second,t) )
 				return false;
 		this.rawModify(c,t);
 		return true;
