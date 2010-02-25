@@ -16,7 +16,8 @@ public class AvlTreeMultiSet<T> extends AvlTreeAdapter<T,T> implements StdMultiS
 		super(new AvlTree<T,T>(comparator));
 	}
 	@Override
-	public void insert(T t) {
+	public boolean insert(T t) {
 		avlTree.insert(t);
+		return true;
 	}
 }

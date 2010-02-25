@@ -36,8 +36,10 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 	protected abstract K getKey(final T t);
 	public NonUniqueIndex() {
 	}
+	protected MultiIndex<T> origin;
 	@Override
-	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
+	public void opInit(final MultiIndex<T> origin, final Integer size) {
+		this.origin = origin;
 		avlTree = container.getTree(); 
 	}
 	@Override
@@ -59,7 +61,7 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 			it.next())
 		{
 			if ( it.get().second.id == c.id ) {
-				it.erase();
+				container.erase(it);
 				break;
 			}
 		}
@@ -76,7 +78,7 @@ public abstract class NonUniqueIndex <K extends Comparable<K>,T> extends Unmodif
 				it.next())
 			{
 				if ( it.get().second.id == c.id ) {
-					it.erase();
+					container.erase(it);
 					break;
 				}
 			}

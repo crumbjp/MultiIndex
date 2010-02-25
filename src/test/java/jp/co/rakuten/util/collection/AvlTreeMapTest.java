@@ -36,17 +36,17 @@ public class AvlTreeMapTest extends TestCase{
 		assertEquals(0L,map.size());
 	}
 	public void testSet(){
-		assertFalse(map.set(10,10));
+		assertFalse(map.replace(10,10));
 		assertEquals(new Integer(10),map.find(10).get().second);
 		assertEquals(11L,map.size());
 	}
 	public void testSet1(){
-		assertTrue(map.set(3,33));
+		assertTrue(map.replace(3,33));
 		assertEquals(new Integer(33),map.find(3).get().second);
 		assertEquals(10L,map.size());
 	}
 	public void testSet2(){
-		assertTrue(map.set(new Pair<Integer,Integer>(3,333)));
+		assertTrue(map.insertReplace(new Pair<Integer,Integer>(3,333)));
 		assertEquals(new Integer(333),map.find(3).get().second);
 		assertEquals(10L,map.size());
 	}

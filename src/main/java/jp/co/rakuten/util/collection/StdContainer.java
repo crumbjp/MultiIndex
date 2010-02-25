@@ -30,4 +30,24 @@ public interface StdContainer<T> {
 	 * @param it Iterator of pointing removing data.
 	 */
 	public void erase(StdIterator<T> it);
+	/**
+	 * <pre>
+	 * Enter the new data.
+	 *   Will be failure. If already associated same identity data in this container.
+	 * </pre>
+	 * 
+	 * @param t specifying data.
+	 * @return true if succeed. false if failure .
+	 */
+	public boolean insert(T t);
+	/**
+	 * <pre>
+	 * Replace value on the key.
+	 *   The key of new pair must be specified the same one.
+	 * </pre> 
+	 * @param it Iterator of pointing replacing data.
+	 * @param t Specifying new pair-data.
+	 * @return true if success.
+	 */
+	public boolean replace(StdIterator<T> it , T t);
 }

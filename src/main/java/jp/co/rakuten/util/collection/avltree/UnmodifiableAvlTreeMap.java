@@ -33,11 +33,11 @@ public class UnmodifiableAvlTreeMap<K,V> implements StdMap<K,V>{
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean set(Pair<K,V> t) {
+	public boolean insertReplace(Pair<K,V> t) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean set(K k ,V v) {
+	public boolean replace(K k ,V v) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
@@ -103,5 +103,9 @@ public class UnmodifiableAvlTreeMap<K,V> implements StdMap<K,V>{
 	public ConstStdIterator<Pair<K, V>> upperBoundStartWith(K k,
 			FindComparator<Pair<K, V>, K> startWithComparator) {
 		return new ConstStdIterator<Pair<K,V>>(avlTree.upperBound(k,startWithComparator));
+	}
+	@Override
+	public boolean replace(StdIterator<Pair<K, V>> it, Pair<K, V> t) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 }

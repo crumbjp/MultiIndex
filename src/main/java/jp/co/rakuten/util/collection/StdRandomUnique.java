@@ -14,4 +14,14 @@ public interface StdRandomUnique<T,K>{
 	 * @return Returns iterator of pointing the data or end of container.
 	 */
 	public StdIterator<T> find(K k);
+	/**
+	 * <pre>
+	 * Enter the new data.
+	 *   Will replace by new data. If already associated same identity data in this container.
+	 * </pre>
+	 * 
+	 * @param t specifying data.
+	 * @return true if replacing.
+	 */
+	public boolean insertReplace(T t);
 }

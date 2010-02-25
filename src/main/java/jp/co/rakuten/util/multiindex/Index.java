@@ -1,7 +1,5 @@
 package jp.co.rakuten.util.multiindex;
 
-import jp.co.rakuten.util.collection.avltree.AvlTree;
-
 /**
  * <h3>Index base I/F of MultiIndex.</h3>
  *     for developer. 
@@ -13,10 +11,10 @@ public interface Index <T> {
 	/**
 	 * Event of initial.
 	 * 
-	 * @param origin MultiIndex's inner container.
+	 * @param origin MultiIndex.
 	 * @param size T.B.D
 	 */
-	public void opInit   (final AvlTree<Record<T>,Record<T>> origin,final Integer size);
+	public void opInit   (final MultiIndex<T> origin,final Integer size);
 	/**
 	 * Event of add into container.
 	 * <pre> 

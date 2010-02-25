@@ -22,12 +22,12 @@ public class AvlIterator<T,K> implements StdIterator<T>{
 			throw new RuntimeException("Failure : Invalid iterator !");
 		return node.t;
 	}
-	@Override
-	public boolean replace(T t) {
-		if ( node == null ) 
-			throw new RuntimeException("Failure : Invalid iterator !");
-		return tree.rawReplace(this, t);
-	}
+//	@Override
+//	public boolean replace(T t) {
+//		if ( node == null ) 
+//			throw new RuntimeException("Failure : Invalid iterator !");
+//		return tree.rawReplace(this, t);
+//	}
 	@Override
 	public boolean equals(Object o) {
 		AvlIterator<T,K> it = (AvlIterator<T,K>)o;
@@ -59,12 +59,12 @@ public class AvlIterator<T,K> implements StdIterator<T>{
 		node = node.prev();
 		return this;
 	}
-	@Override
-	public boolean erase() {
-		if ( node == null ) 
-			throw new RuntimeException("Failure : Invalid iterator !");
-		return tree.erase(this);
-	}
+//	@Override
+//	public boolean erase() {
+//		if ( node == null ) 
+//			throw new RuntimeException("Failure : Invalid iterator !");
+//		return tree.erase(this);
+//	}
 	@Override
 	public AvlTree<T,K> container(){
 		return tree;

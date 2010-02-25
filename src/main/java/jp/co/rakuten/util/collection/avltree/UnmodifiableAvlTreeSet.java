@@ -28,7 +28,7 @@ public class UnmodifiableAvlTreeSet<T> implements StdSet<T>{
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
-	public boolean set(T t) {
+	public boolean insertReplace(T t) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
@@ -86,5 +86,9 @@ public class UnmodifiableAvlTreeSet<T> implements StdSet<T>{
 	public ConstStdIterator<T> upperBoundStartWith(T k,
 			FindComparator<T, T> startWithComparator) {
 		return new ConstStdIterator<T>(avlTree.upperBound(k,startWithComparator));
+	}
+	@Override
+	public boolean replace(StdIterator<T> it, T t) {
+		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 }

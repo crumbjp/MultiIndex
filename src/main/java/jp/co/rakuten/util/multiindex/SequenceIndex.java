@@ -4,7 +4,6 @@ import jp.co.rakuten.util.collection.CompatibleIterable;
 import jp.co.rakuten.util.collection.CompatibleReverseIterable;
 import jp.co.rakuten.util.collection.StdIterator;
 import jp.co.rakuten.util.collection.StdSet;
-import jp.co.rakuten.util.collection.avltree.AvlTree;
 import jp.co.rakuten.util.collection.avltree.UnmodifiableAvlTreeSet;
 /**
  * <h3>The index is sorted in order of insertion.</h3>
@@ -44,8 +43,8 @@ public class SequenceIndex<T> extends UnmodifiableAvlTreeSet<Record<T>> implemen
 		// Nothing to do.
 	}
 	@Override
-	public void opInit(final AvlTree<Record<T>,Record<T>> origin, final Integer size) {
-		avlTree = origin;
+	public void opInit(final MultiIndex<T> origin, final Integer size) {
+		avlTree = origin.dataContainer;
 	}
 	@Override
 	public void opClear() {

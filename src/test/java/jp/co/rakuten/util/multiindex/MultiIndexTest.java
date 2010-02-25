@@ -48,16 +48,16 @@ class MyData implements Comparable<MyData>{
 public class MultiIndexTest extends TestCase {
 	MultiIndex<MultiIndexData> mi;
 	SequenceIndex<MultiIndexData> sequence;
-	OrderedUniqueIndex<Integer, MultiIndexData> orderedUnique1;	
-	OrderedUniqueIndex<Long, MultiIndexData> orderedUnique2;	
+	OrderedUniqueIndex<Integer, MultiIndexData> unique1;	
+	OrderedUniqueIndex<Long, MultiIndexData> unique2;	
 	IdentityIndex<MultiIndexData> identity;
-	OrderedNonUniqueIndex<String, MultiIndexData> orderedNonUnique;	
+	OrderedNonUniqueIndex<String, MultiIndexData> nonUnique;	
 
-	ArrayList<Integer> uniqueSequenceOrder = new ArrayList<Integer>();
-	ArrayList<Integer> uniqueOrderedUniqueOrder = new ArrayList<Integer>();
-	ArrayList<Integer> uniqueHashedUniqueOrder = new ArrayList<Integer>();
-	ArrayList<Integer> uniqueIdentityOrder = new ArrayList<Integer>();
-	ArrayList<Integer> uniqueOrderedNonUniqueOrder = new ArrayList<Integer>();
+	ArrayList<Integer> expectSequence = new ArrayList<Integer>();
+	ArrayList<Integer> expectUnique1 = new ArrayList<Integer>();
+	ArrayList<Integer> expectUnique2 = new ArrayList<Integer>();
+	ArrayList<Integer> expectIdentity = new ArrayList<Integer>();
+	ArrayList<Integer> expectNonUnique = new ArrayList<Integer>();
 	@Override
 	protected void tearDown() throws Exception {
 		mi.clear();
@@ -76,10 +76,10 @@ public class MultiIndexTest extends TestCase {
 						)
 				);
 		sequence = (SequenceIndex<MultiIndexData>)mi.index(0);
-		orderedUnique1 = (OrderedUniqueIndex<Integer, MultiIndexData>)mi.index(1);
-		orderedUnique2  = (OrderedUniqueIndex<Long, MultiIndexData>)mi.index(2);
+		unique1 = (OrderedUniqueIndex<Integer, MultiIndexData>)mi.index(1);
+		unique2  = (OrderedUniqueIndex<Long, MultiIndexData>)mi.index(2);
 		identity  = (IdentityIndex<MultiIndexData>)mi.index(3);
-		orderedNonUnique = (OrderedNonUniqueIndex<String, MultiIndexData>)mi.index(4);
+		nonUnique = (OrderedNonUniqueIndex<String, MultiIndexData>)mi.index(4);
 		
 		mi.add(new MultiIndexData(6,2l,"abc")); // Unique = 1
 		mi.add(new MultiIndexData(5,1l,"efg")); // Unique = 2
@@ -88,40 +88,40 @@ public class MultiIndexTest extends TestCase {
 		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
 		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6
 
-		uniqueSequenceOrder.add(1);
-		uniqueSequenceOrder.add(2);
-		uniqueSequenceOrder.add(3);
-		uniqueSequenceOrder.add(4);
-		uniqueSequenceOrder.add(5);
-		uniqueSequenceOrder.add(6);
+		expectSequence.add(1);
+		expectSequence.add(2);
+		expectSequence.add(3);
+		expectSequence.add(4);
+		expectSequence.add(5);
+		expectSequence.add(6);
 
-		uniqueIdentityOrder.add(6);
-		uniqueIdentityOrder.add(5);
-		uniqueIdentityOrder.add(4);
-		uniqueIdentityOrder.add(3);
-		uniqueIdentityOrder.add(2);
-		uniqueIdentityOrder.add(1);
+		expectIdentity.add(6);
+		expectIdentity.add(5);
+		expectIdentity.add(4);
+		expectIdentity.add(3);
+		expectIdentity.add(2);
+		expectIdentity.add(1);
 		
-		uniqueOrderedUniqueOrder.add(6);
-		uniqueOrderedUniqueOrder.add(5);
-		uniqueOrderedUniqueOrder.add(4);
-		uniqueOrderedUniqueOrder.add(3);
-		uniqueOrderedUniqueOrder.add(2);
-		uniqueOrderedUniqueOrder.add(1);
+		expectUnique1.add(6);
+		expectUnique1.add(5);
+		expectUnique1.add(4);
+		expectUnique1.add(3);
+		expectUnique1.add(2);
+		expectUnique1.add(1);
 		
-		uniqueHashedUniqueOrder.add(2);
-		uniqueHashedUniqueOrder.add(1);
-		uniqueHashedUniqueOrder.add(3);
-		uniqueHashedUniqueOrder.add(6);
-		uniqueHashedUniqueOrder.add(4);
-		uniqueHashedUniqueOrder.add(5);
+		expectUnique2.add(2);
+		expectUnique2.add(1);
+		expectUnique2.add(3);
+		expectUnique2.add(6);
+		expectUnique2.add(4);
+		expectUnique2.add(5);
 		
-		uniqueOrderedNonUniqueOrder.add(1);
-		uniqueOrderedNonUniqueOrder.add(6);
-		uniqueOrderedNonUniqueOrder.add(2);
-		uniqueOrderedNonUniqueOrder.add(3);
-		uniqueOrderedNonUniqueOrder.add(4);
-		uniqueOrderedNonUniqueOrder.add(5);
+		expectNonUnique.add(1);
+		expectNonUnique.add(6);
+		expectNonUnique.add(2);
+		expectNonUnique.add(3);
+		expectNonUnique.add(4);
+		expectNonUnique.add(5);
 		
 		 super.setUp();
 	}
@@ -129,10 +129,10 @@ public class MultiIndexTest extends TestCase {
 		assertEquals(new Integer(4),identity.get(new MultiIndexData(3,0l,"")).get().unique);
 	}
 	public void testGet2(){
-		assertEquals(new Integer(4),orderedUnique1.get(3).get().unique);
+		assertEquals(new Integer(4),unique1.get(3).get().unique);
 	}
 	public void testGet3(){
-		assertEquals(new Integer(4),orderedUnique2.get(5l).get().unique);
+		assertEquals(new Integer(4),unique2.get(5l).get().unique);
 	}
 	public void testGet4(){
 //		mi.add(new MultiIndexData(6,2l,"abc")); // Unique = 1
@@ -141,7 +141,7 @@ public class MultiIndexTest extends TestCase {
 //		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4
 //		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
 //		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6
-		Pair<StdIterator<Pair<String,Record<MultiIndexData>>>,StdIterator<Pair<String,Record<MultiIndexData>>>> p = orderedNonUnique.equlRange("abc");
+		Pair<StdIterator<Pair<String,Record<MultiIndexData>>>,StdIterator<Pair<String,Record<MultiIndexData>>>> p = nonUnique.equlRange("abc");
 		assertEquals(new Integer(1),p.first.get().second.get().unique);
 		p.first.next();
 		assertEquals(new Integer(6),p.first.get().second.get().unique);
@@ -154,38 +154,38 @@ public class MultiIndexTest extends TestCase {
 		assertFalse(mi.add(new MultiIndexData(1,7l,"abc"))); // Unique = 8
 		assertTrue (mi.add(new MultiIndexData(0,7l,"abc"))); // Unique = 9
 		
-		uniqueSequenceOrder.add(9);
-		uniqueIdentityOrder.add(0,9);
-		uniqueOrderedUniqueOrder.add(0,9);
-		uniqueHashedUniqueOrder.add(9);
-		uniqueOrderedNonUniqueOrder.add(2,9);
+		expectSequence.add(9);
+		expectIdentity.add(0,9);
+		expectUnique1.add(0,9);
+		expectUnique2.add(9);
+		expectNonUnique.add(2,9);
 
-		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
+		Iterator<Integer> sexp = expectSequence.iterator();
 		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
-		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
+		Iterator<Integer> iexp = expectIdentity.iterator();
 		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
-		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique1) ) {
+		Iterator<Integer> oexp = expectUnique1.iterator();
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(unique1) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
-		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(orderedUnique2) ) {
+		Iterator<Integer> hexp = expectUnique2.iterator();
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(unique2) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
-		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
+		Iterator<Integer> nexp = expectNonUnique.iterator();
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(nonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());
@@ -199,38 +199,38 @@ public class MultiIndexTest extends TestCase {
 		assertTrue(mi.modify(d, new MultiIndexData(5,7l,"abc")));  // Unique = 10
 		assertTrue(mi.modify(d, new MultiIndexData(5,1l,"efg")));  // Unique = 11
 
-		uniqueSequenceOrder.set(1,11);
-		uniqueIdentityOrder.set(4,11);
-		uniqueOrderedUniqueOrder.set(4,11);
-		uniqueHashedUniqueOrder.set(0,11);
-		uniqueOrderedNonUniqueOrder.set(2,11);
+		expectSequence.set(1,11);
+		expectIdentity.set(4,11);
+		expectUnique1.set(4,11);
+		expectUnique2.set(0,11);
+		expectNonUnique.set(2,11);
 	
-		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
+		Iterator<Integer> sexp = expectSequence.iterator();
 		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
-		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
+		Iterator<Integer> iexp = expectIdentity.iterator();
 		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
-		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique1) ) {
+		Iterator<Integer> oexp = expectUnique1.iterator();
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(unique1) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
-		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(orderedUnique2) ) {
+		Iterator<Integer> hexp = expectUnique2.iterator();
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(unique2) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
-		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
+		Iterator<Integer> nexp = expectNonUnique.iterator();
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(nonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());
@@ -242,55 +242,55 @@ public class MultiIndexTest extends TestCase {
 //		mi.add(new MultiIndexData(3,5l,"klm")); // Unique = 4 x
 //		mi.add(new MultiIndexData(2,6l,"nop")); // Unique = 5
 //		mi.add(new MultiIndexData(1,4l,"abc")); // Unique = 6 x
-		Record<MultiIndexData> d1 = orderedUnique1.get(6); // 6 - 2 - abc
+		Record<MultiIndexData> d1 = unique1.get(6); // 6 - 2 - abc
 		mi.remove(d1);
-		Record<MultiIndexData> d2 = orderedUnique1.get(1); // 1 - 4 - abc
+		Record<MultiIndexData> d2 = unique1.get(1); // 1 - 4 - abc
 		mi.remove(d2);
-		Record<MultiIndexData> d3 = orderedUnique1.get(3); // 3 - 5 - klm
+		Record<MultiIndexData> d3 = unique1.get(3); // 3 - 5 - klm
 		mi.remove(d3);
 
-		uniqueSequenceOrder.remove(5);
-		uniqueSequenceOrder.remove(3);
-		uniqueSequenceOrder.remove(0);
-		uniqueIdentityOrder.remove(5);
-		uniqueIdentityOrder.remove(2);
-		uniqueIdentityOrder.remove(0);
-		uniqueOrderedUniqueOrder.remove(5);
-		uniqueOrderedUniqueOrder.remove(2);
-		uniqueOrderedUniqueOrder.remove(0);
-		uniqueHashedUniqueOrder.remove(4);
-		uniqueHashedUniqueOrder.remove(3);
-		uniqueHashedUniqueOrder.remove(1);
-		uniqueOrderedNonUniqueOrder.remove(4);
-		uniqueOrderedNonUniqueOrder.remove(1);
-		uniqueOrderedNonUniqueOrder.remove(0);
+		expectSequence.remove(5);
+		expectSequence.remove(3);
+		expectSequence.remove(0);
+		expectIdentity.remove(5);
+		expectIdentity.remove(2);
+		expectIdentity.remove(0);
+		expectUnique1.remove(5);
+		expectUnique1.remove(2);
+		expectUnique1.remove(0);
+		expectUnique2.remove(4);
+		expectUnique2.remove(3);
+		expectUnique2.remove(1);
+		expectNonUnique.remove(4);
+		expectNonUnique.remove(1);
+		expectNonUnique.remove(0);
 	
-		Iterator<Integer> sexp = uniqueSequenceOrder.iterator();
+		Iterator<Integer> sexp = expectSequence.iterator();
 		for ( Record<MultiIndexData> c : new CompatibleIterable<Record<MultiIndexData>>(sequence) ) {
 			assertEquals(sexp.next(), c.get().unique);
 		}
 		assertFalse(sexp.hasNext());
 		
-		Iterator<Integer> iexp = uniqueIdentityOrder.iterator();
+		Iterator<Integer> iexp = expectIdentity.iterator();
 		for ( Pair<MultiIndexData,Record<MultiIndexData>> p : new CompatibleIterable<Pair<MultiIndexData,Record<MultiIndexData>>>(identity) ) {
 			assertEquals(iexp.next(), p.second.get().unique);
 		}
 		assertFalse(iexp.hasNext());
 	
-		Iterator<Integer> oexp = uniqueOrderedUniqueOrder.iterator();
-		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(orderedUnique1) ) {
+		Iterator<Integer> oexp = expectUnique1.iterator();
+		for ( Pair<Integer,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Integer,Record<MultiIndexData>>>(unique1) ) {
 			assertEquals(oexp.next(), p.second.get().unique);
 		}
 		assertFalse(oexp.hasNext());
 		
-		Iterator<Integer> hexp = uniqueHashedUniqueOrder.iterator();
-		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(orderedUnique2) ) {
+		Iterator<Integer> hexp = expectUnique2.iterator();
+		for ( Pair<Long,Record<MultiIndexData>> p : new CompatibleIterable<Pair<Long,Record<MultiIndexData>>>(unique2) ) {
 			assertEquals(hexp.next(), p.second.get().unique);
 		}
 		assertFalse(hexp.hasNext());
 
-		Iterator<Integer> nexp = uniqueOrderedNonUniqueOrder.iterator();
-		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(orderedNonUnique) ) {
+		Iterator<Integer> nexp = expectNonUnique.iterator();
+		for ( Pair<String,Record<MultiIndexData>> p : new CompatibleIterable<Pair<String,Record<MultiIndexData>>>(nonUnique) ) {
 			assertEquals(nexp.next(), p.second.get().unique);
 		}
 		assertFalse(nexp.hasNext());

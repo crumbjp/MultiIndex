@@ -25,10 +25,10 @@ public class ConstStdIterator<T> implements StdIterator<T>{
 	 * </pre>
 	 * @throws UnsupportedOperationException
 	 */
-	@Override
-	public boolean replace(T t){
-		throw new UnsupportedOperationException("Operation has not been permitted .");
-	}
+//	@Override
+//	public boolean replace(T t){
+//		throw new UnsupportedOperationException("Operation has not been permitted .");
+//	}
 	@Override
 	public boolean isEnd(){
 		return it.isEnd();
@@ -50,10 +50,10 @@ public class ConstStdIterator<T> implements StdIterator<T>{
 	 * </pre>
 	 * @throws UnsupportedOperationException
 	 */
-	@Override
-	public boolean erase(){
-		throw new UnsupportedOperationException("Operation has not been permitted .");
-	}
+//	@Override
+//	public boolean erase(){
+//		throw new UnsupportedOperationException("Operation has not been permitted .");
+//	}
 	@Override
 	public boolean equals(Object obj) {
 		ConstStdIterator<T> in = (ConstStdIterator<T>)obj; 

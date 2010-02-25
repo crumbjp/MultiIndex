@@ -19,7 +19,7 @@ public class AvlTreeSet<T> extends AvlTreeAdapter<T,T> implements StdSet<T>{
 		return avlTree.insertUnique(t);
 	}
 	@Override
-	public boolean set(T t) {
+	public boolean insertReplace(T t) {
 		return avlTree.insertReplace(t);
 	}
 }

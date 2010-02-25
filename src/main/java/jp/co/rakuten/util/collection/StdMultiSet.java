@@ -16,15 +16,4 @@ package jp.co.rakuten.util.collection;
  * @param <T> Target data-type. 
  */
 public interface StdMultiSet<T> extends StdSequence<T>,StdRandom<T,T>,StdRandomMulti<T,T>,StdRandomStartWith<T,T>{
-	/**
-	 * <pre>
-	 * Enter the new data.
-	 *   New data will be inserted into the last position in the group.
-	 *   If already associated same identity data in this container.
-	 * </pre>
-	 * 
-	 * @param t specifying data.
-	 */
-	public void insert(T t);
-
 }

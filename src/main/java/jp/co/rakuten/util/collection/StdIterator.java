@@ -18,7 +18,7 @@ public interface StdIterator<T> {
 	 * @param t replacing value.
 	 * @return true if succeed.
 	 */
-	public boolean replace(T t);
+//	public boolean replace(T t);
 	/**
 	 * <pre>
 	 * Returns true if iterator being out of range.
@@ -45,7 +45,7 @@ public interface StdIterator<T> {
 	 * Erase current data.
 	 * @return true if succeed.
 	 */
-	public boolean erase();
+//	public boolean erase();
 	/**
 	 * <pre>
 	 * For range iteration.

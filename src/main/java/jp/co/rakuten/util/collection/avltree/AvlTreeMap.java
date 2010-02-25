@@ -46,11 +46,11 @@ public class AvlTreeMap<K,V> extends AvlTreeAdapter<Pair<K,V>,K> implements StdM
 		return avlTree.insertUnique(new Pair<K,V>(k,v));
 	}
 	@Override
-	public boolean set(Pair<K,V> t) {
+	public boolean insertReplace(Pair<K,V> t) {
 		return avlTree.insertReplace(t);
 	}
 	@Override
-	public boolean set(K k ,V v) {
+	public boolean replace(K k ,V v) {
 		return avlTree.insertReplace(new Pair<K,V>(k,v));
 	}
 	@Override

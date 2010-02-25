@@ -85,7 +85,7 @@ import jp.co.rakuten.util.collection.avltree.FindComparator;
  */
 public class MultiIndex <T> {
 	private final IndexBy<T> indexBy;
-	private final AvlTree<Record<T>,Record<T>> dataContainer = new AvlTree<Record<T>,Record<T>>(
+	final AvlTree<Record<T>,Record<T>> dataContainer = new AvlTree<Record<T>,Record<T>>(
 			new Comparator<Record<T>>() {
 				@Override
 				public int compare(Record<T> o1, Record<T> o2) {
@@ -110,7 +110,7 @@ public class MultiIndex <T> {
 		this.size = DEFAULT_SIZE;
 		this.indexBy = indexBy;
 		for ( Index<T> index : indexBy )
-			index.opInit(this.dataContainer,this.size);
+			index.opInit(this,this.size);
 	}
 	/**
 	 * Instantiate with indexes. (T.B.D)
@@ -122,7 +122,7 @@ public class MultiIndex <T> {
 		this.size = size;
 		this.indexBy = indexBy;
 		for ( Index<T> index : indexBy )
-			index.opInit(this.dataContainer,this.size);
+			index.opInit(this,this.size);
 	}
 	/**
 	 * Get index.

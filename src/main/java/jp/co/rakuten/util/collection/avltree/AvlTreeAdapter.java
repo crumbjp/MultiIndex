@@ -87,5 +87,18 @@ public class AvlTreeAdapter<T,K> implements StdContainer<T>,StdSequence<T>,StdRa
 	public StdIterator<T> upperBoundStartWith(K k,FindComparator<T,K> startWithComparator) {
 		return avlTree.upperBound(k, startWithComparator);
 	}
-	
+	@Override
+	public boolean insert(T t) {
+		avlTree.insert(t);
+		return true;
+	}
+	@Override
+	public boolean replace(StdIterator<T> it, T t) {
+		if ( it.isEnd() )
+			return false;
+		return avlTree.rawReplace((AvlIterator<T,K>)it, t);
+	}
+	public boolean insertReplace(T t) {
+		return avlTree.insertReplace(t);
+	};
 }

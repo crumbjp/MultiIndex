@@ -18,18 +18,6 @@ package jp.co.rakuten.util.collection;
  * @param <V> Value-type. 
  */
 public interface StdMap<K,V> extends StdSequence<Pair<K,V>>,StdRandom<Pair<K,V>,K>,StdRandomUnique<Pair<K,V>,K>,StdRandomStartWith<Pair<K,V>,K> {
-
-	/**
-	 * <pre>
-	 * Enter the new data.
-	 *   Will be failure. If already associated same key in this container.
-	 * </pre>
-	 *	
-	 * @param t specifying pair-data. Key is the first. Value is the second.
-	 * @return true if succeed. false if failure .
-	 */
-	public boolean insert(Pair<K,V> t);
-
 	/**
 	 * <pre>
 	 * Enter the new data.
@@ -48,22 +36,11 @@ public interface StdMap<K,V> extends StdSequence<Pair<K,V>>,StdRandom<Pair<K,V>,
 	 *   Will replace by new pair-data. If already associated same key in this container.
 	 * </pre>
 	 * 
-	 * @param t specifying pair-data. Key is the first. Value is the second.
-	 * @return true if replacing.
-	 */
-	public boolean set(Pair<K,V> t);
-
-	/**
-	 * <pre>
-	 * Enter the new data.
-	 *   Will replace by new pair-data. If already associated same key in this container.
-	 * </pre>
-	 * 
 	 * @param k specifying key.
 	 * @param v specifying value, associating with key.
 	 * @return true if replacing.
 	 */
-	public boolean set(K k ,V v);
+	public boolean replace(K k ,V v);
 
 	/**
 	 * <pre>

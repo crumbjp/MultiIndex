@@ -24,7 +24,7 @@ public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 		return avlTree.size();
 	}
 	@Override
-	public void insert(Pair<K,V> t) {
+	public boolean insert(Pair<K,V> t) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override
@@ -69,10 +69,6 @@ public class UnmodifiableAvlTreeMultiMap<K,V> implements StdMultiMap<K,V>{
 	}
 	@Override
 	public boolean replace(StdIterator<Pair<K, V>> it, Pair<K, V> t) {
-		throw new UnsupportedOperationException("Operation has not been permitted .");
-	}
-	@Override
-	public boolean replace(StdIterator<Pair<K,V>> it, V v) {
 		throw new UnsupportedOperationException("Operation has not been permitted .");
 	}
 	@Override

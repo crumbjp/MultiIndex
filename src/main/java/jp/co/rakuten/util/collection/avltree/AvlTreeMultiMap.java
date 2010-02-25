@@ -39,8 +39,9 @@ public class AvlTreeMultiMap<K,V> extends AvlTreeAdapter<Pair<K,V>,K> implements
 		));
 	}
 	@Override
-	public void insert(Pair<K,V> t) {
+	public boolean insert(Pair<K,V> t) {
 		avlTree.insert(t);
+		return true;
 	}
 	@Override
 	public void insert(K k ,V v) {
@@ -51,12 +52,5 @@ public class AvlTreeMultiMap<K,V> extends AvlTreeAdapter<Pair<K,V>,K> implements
 		if ( it.isEnd() )
 			return false;
 		return avlTree.rawReplace((AvlIterator<Pair<K,V>,K>)it, t);
-	}
-	@Override
-	public boolean replace(StdIterator<Pair<K,V>> it , V v) {
-		if ( it.isEnd() )
-			return false;
-		it.get().second = v;
-		return true;
 	}
 }
